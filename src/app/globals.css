@@ -1,6 +1,6 @@
 html, body {
   height: 100%;
-  background: url("/the-platapus/mee/public/assets/images/plsloadgoddamnitsmol.webp") center/cover no-repeat;
+  background: url("https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnitsmol.webp") center/cover no-repeat;
   background-color:#2b3a4f;
   background-size: cover;
   background-position: center;
@@ -18,7 +18,7 @@ html, body {
 }
 
 body.loaded {
-  background-image: url("/the-platapus/mee/public/assets/images/plsloadgoddamnit.jpg");
+  background-image: url("https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnit.png");
 }
 
 div {
