@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-export default function Home() {
-  const skills = [
-    "Android, iOS and Symbian Dev",
-    "PC Hardware and ICE Enthusiast",
-    "3D Artist and Photographer/Videographer",
-  ];
+const skills = [
+  "Android, iOS and Symbian Dev",
+  "PC Hardware and ICE Enthusiast",
+  "3D Artist and Photographer/Videographer",
+];
 
+export default function Home() {
   const [skillIndex, setSkillIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -37,7 +37,7 @@ export default function Home() {
     }
 
     return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, skillIndex, skills]);
+  }, [charIndex, isDeleting, skillIndex]);
 
   useEffect(() => {
     document.body.classList.add("loaded");
