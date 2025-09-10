@@ -17,7 +17,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Abdullah Aamir",
+  title: "the-platapus",
   description: "Personal Portfolio",
 };
 
