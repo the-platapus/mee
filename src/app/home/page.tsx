@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Metadata } from "next";
-import { Lexend, Montserrat } from "next/font/google";
 import "./home.css";
 
 const skills = [
@@ -10,7 +8,6 @@ const skills = [
   "PC Hardware and ICE Enthusiast",
   "3D Artist and Photographer/Videographer",
 ];
-
 
 export default function HomePage() {
   const [skillIndex, setSkillIndex] = useState(0);
@@ -47,8 +44,6 @@ export default function HomePage() {
 
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, skillIndex]);
-
-
 
   return (
     <>
