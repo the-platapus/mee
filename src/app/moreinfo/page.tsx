@@ -13,11 +13,11 @@ export default function MoreInfo() {
       <div className="sub-caption flex gap-[3vh] p-[3.5%] flex-col sm:flex-row bg-white">
         <div className="quotes">
           <h2 className="p-[3%] text-[29px] font-lexend font-normal leading-[47px] m-0 text-[#1c4587] pb-0">
-            "Look deep into nature, and then you will understand everything
-            better."
+            &quotLook deep into nature, and then you will understand everything
+            better.&quot
           </h2>
           <h3 className="p-[3%] text-[15px] font-lexend font-light leading-[30px] m-0 text-[#1c4587] pt-0">
-            "-Albert Fuckstein
+            -Albert Fuckstein
           </h3>
         </div>
         <div className="aim">
