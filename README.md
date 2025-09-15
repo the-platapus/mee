@@ -1,2 +1,2 @@
 # me
-a damn portfolio
+a damn portfolio, but on React.js
