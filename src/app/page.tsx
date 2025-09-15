@@ -71,7 +71,7 @@ export default function Home() {
           <div className="firefly"></div>
         </>
       ) : null}
-      <Script src="/oneko/oneko.js" strategy="afterInteractive" data-cat="/oneko/oneko.gif" />
+      <Script src="/oneko/oneko.js" strategy="afterInteractive" data-cat="https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/oneko/oneko.gif" />
     </>
   );
 }
