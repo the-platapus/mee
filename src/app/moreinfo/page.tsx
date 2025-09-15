@@ -6,7 +6,7 @@ export default function MoreInfo() {
     <div className="m-0 text-left w-full bg-transparent break-words">
       <div className="main-caption h-screen w-full">
         <h2 className="pt-[45vh] text-center text-[#d8933f] text-xl font-montserrat font-normal m-0">
-          Hi, I'm Abdullah Aamir. I'm into anything that interests me.
+          Hi, I&apos;m Abdullah Aamir. I&apos;m into anything that interests me.
         </h2>
       </div>
 
@@ -17,7 +17,7 @@ export default function MoreInfo() {
             better."
           </h2>
           <h3 className="p-[3%] text-[15px] font-lexend font-light leading-[30px] m-0 text-[#1c4587] pt-0">
-            -Albert Fuckstein
+            "-Albert Fuckstein
           </h3>
         </div>
         <div className="aim">
@@ -37,9 +37,9 @@ export default function MoreInfo() {
         <div className="paragraph">
           <h2 className="p-[3%] text-[29px] font-lexend font-normal leading-[47px] m-0 text-[#1c4587] text-[#d8933f] pb-0 text-[30px]">About me.</h2>
           <h3 className="p-[3%] text-[15px] font-lexend font-light leading-[30px] m-0 text-[#1c4587] text-[#d8933f] pt-0">
-            Currently completing my Bachelor's Degree in Defence Forensics and Cybersecurity, I aim to gather the most experience along the way of my learning path with noticeable grades so I can obtain my spot in the companies that are well known around the world. <br />
+            Currently completing my Bachelor&apos;s Degree in Defence Forensics and Cybersecurity, I aim to gather the most experience along the way of my learning path with noticeable grades so I can obtain my spot in the companies that are well known around the world. <br />
 
-  As of this generation, the worth and value of a person is dependent on the skillsets they possess and how keen they are at executing it. I believe in learning and adapting to new technologies and trends as they come. I have a passion for technology and how it works, and I want to be a part of the change that is happening around us.
+  As of this generation, the worth and value of a person is dependent on the skillsets they possess and how keen they are at executing it&apos;s. I believe in learning and adapting to new technologies and trends as they come. I have a passion for technology and how it works, and I want to be a part of the change that is happening around us.
           </h3>
         </div>
       </div>
