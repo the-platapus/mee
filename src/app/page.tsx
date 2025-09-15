@@ -1,90 +1,77 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const skills = [
-  "Android, iOS and Symbian Dev",
-  "PC Hardware and ICE Enthusiast",
-  "3D Artist and Photographer/Videographer",
-];
+import Script from "next/script";
+// import MoreInfo from "./moreinfo/page";
+import HomePage from "./home/page";
+import "./globals.css";
+import "./fireflies.css";
 
 export default function Home() {
-  const [skillIndex, setSkillIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isSplashLoaded, setIsSplashLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    // Lazy load background image
+    const loadBackgroundImage = () => {
+      const img = new Image();
+      img.src = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnitsmol.webp";
 
-    if (!isDeleting && charIndex < skills[skillIndex].length) {
-      timeout = setTimeout(() => {
-        setDisplayText((prev) => prev + skills[skillIndex].charAt(charIndex));
-        setCharIndex(charIndex + 1);
-      }, 75);
-    } else if (!isDeleting && charIndex === skills[skillIndex].length) {
-      timeout = setTimeout(() => {
-        setIsDeleting(true);
-      }, 1500);
-    } else if (isDeleting && charIndex > 0) {
-      timeout = setTimeout(() => {
-        setDisplayText(skills[skillIndex].substring(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
-      }, 27);
-    } else if (isDeleting && charIndex === 0) {
-      setIsDeleting(false);
-      setSkillIndex((prev) => (prev + 1) % skills.length);
-    }
+      img.onload = () => {
+        // Apply the loaded image as background
+        document.body.style.backgroundImage = `url(${img.src})`;
+        document.body.classList.add("loaded");
 
-    return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, skillIndex]);
+        // Load the high-res version after the initial image loads
+        const highResImg = new Image();
+        highResImg.src = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnit.jpeg";
 
-  useEffect(() => {
-    document.body.classList.add("loaded");
+        highResImg.onload = () => {
+          document.body.style.backgroundImage = `url(${highResImg.src})`;
+        };
+      };
+    };
+
+    loadBackgroundImage();
   }, []);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsSplashLoaded(true);
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
 
   return (
     <>
-      <h1>Abdullah Aamir</h1>
-      <div className="header-icons">
-        <a
-          aria-label="My Github Profile"
-          target="_self"
-          href="https://github.com/the-platapus"
-          rel="noreferrer"
-        >
-          <i className="icon fa-brands fa-github" aria-hidden="true"></i>
-        </a>
-        <a
-          aria-label="Send Email"
-          href="mailto:abu378072@gmail.com"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <i className="icon fa-solid fa-envelope" aria-hidden="true"></i>
-        </a>
-        <a
-          aria-label="Next Page"
-          target="_self"
-          href="https://sites.google.com/view/abdullah1325/who-is-the_platapus"
-          rel="noreferrer"
-        >
-          <i className="icon fa-solid fa-circle-arrow-right colo"></i>
-        </a>
-      </div>
-      <p className="tagline">
-        <span id="typing">{displayText}</span>
-        <span className="cursor"></span>
-      </p>
-
-      {/* Fireflies divs */}
-      <div className="firefly"></div>
-      <div className="firefly"></div>
-      <div className="firefly"></div>
-      <div className="firefly"></div>
-      <div className="firefly"></div>
-      <div className="firefly"></div>
-      <div className="firefly"></div>
+      {isSplashLoaded ? (
+        <>
+          <HomePage />
+        </>
+      ) : null}
+      {isLoaded ? (
+        <>
+          {/* <MoreInfo /> */}
+          {/* Fireflies divs */}
+          <div className="firefly"></div>
+          <div className="firefly"></div>
+          <div className="firefly"></div>
+          <div className="firefly"></div>
+          <div className="firefly"></div>
+          <div className="firefly"></div>
+          <div className="firefly"></div>
+        </>
+      ) : null}
+      <Script src="/oneko/oneko.js" strategy="afterInteractive" data-cat="/oneko/oneko.gif" />
     </>
   );
 }
