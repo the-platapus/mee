@@ -63,13 +63,14 @@ export default function Home() {
     <>
       <div
         id="bg-layer"
-        className="fixed top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-out"
+        className="fixed top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat pointer-events-none"
         style={{
           backgroundImage: bgSrc ? `url("${bgSrc}")` : "none",
           backgroundColor: "#2b3a4f",
           zIndex: -1,
           filter: `blur(${blurAmount}px)`,
           transform: `scale(${1 + blurAmount * 0.015})`,
+          transition: "filter 0.3s ease-out, transform 0.3s ease-out"
         }}
       />
       <div className="relative z-10 w-full min-h-screen">

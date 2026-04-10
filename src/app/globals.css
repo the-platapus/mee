@@ -7,10 +7,8 @@ html {
 }
 
 html, body {
-  height: 100%;
   background: transparent;
   overflow-x: hidden;
-  overflow-y: auto;
   scroll-snap-type: y mandatory;
   margin: 0;
   padding: 0;
