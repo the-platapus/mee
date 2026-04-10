@@ -32,14 +32,14 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const viewportHeight = window.innerHeight;
       // Blur increases by 1px for every 10% of viewport scrolled, up to 10px
       const newBlur = Math.min(scrollY / (viewportHeight * 0.1), 10);
       setBlurAmount(newBlur);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -61,19 +61,26 @@ export default function Home() {
 
   return (
     <>
-      <div
-        id="bg-layer"
-        className="fixed top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat pointer-events-none"
+      <div 
+        id="bg-container"
+        className="fixed top-0 left-0 w-full h-full pointer-events-none"
         style={{
-          backgroundImage: bgSrc ? `url("${bgSrc}")` : "none",
-          backgroundColor: "#2b3a4f",
           zIndex: -1,
           filter: `blur(${blurAmount}px)`,
           transform: `scale(${1 + blurAmount * 0.015})`,
           transition: "filter 0.3s ease-out, transform 0.3s ease-out"
         }}
-      />
-      <div className="relative z-10 w-full min-h-screen">
+      >
+        <div
+          id="bg-layer"
+          className="w-full h-full bg-cover bg-center bg-no-repeat animate-fadeIn"
+          style={{
+            backgroundImage: bgSrc ? `url("${bgSrc}")` : "none",
+            backgroundColor: "#2b3a4f",
+          }}
+        />
+      </div>
+      <div className="relative z-10 w-full min-h-screen animate-fadeIn">
         {isSplashLoaded ? (
           <>
             <HomePage />

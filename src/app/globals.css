@@ -4,9 +4,11 @@
 
 html {
   background-color: #2b3a4f;
+  min-height: 100vh;
 }
 
 html, body {
+  min-height: 100vh;
   background: transparent;
   overflow-x: hidden;
   scroll-snap-type: y mandatory;
@@ -16,6 +18,9 @@ html, body {
   font-family: var(--font-dancing-script), "Brush Script MT", "Comic Sans MS", cursive;
   user-select: none;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.animate-fadeIn {
   filter: brightness(0%);
   animation: backgroundFadeIn 3s ease forwards;
 }
