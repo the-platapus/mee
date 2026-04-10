@@ -100,7 +100,7 @@ export default function Home() {
           </>
         ) : null}
       </div>
-      <Script src="https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/oneko/oneko.js" strategy="afterInteractive" data-cat="https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/oneko/oneko.gif" />
+      <Script src="/oneko/oneko.js" strategy="afterInteractive" data-cat="/oneko/oneko.gif" />
     </>
   );
 }

@@ -167,3 +167,9 @@ html::-webkit-scrollbar {
   }
 
 }
+
+#oneko {
+  position: fixed !important;
+  z-index: 10000 !important;
+  pointer-events: none;
+}
