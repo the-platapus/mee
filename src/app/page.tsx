@@ -79,6 +79,14 @@ export default function Home() {
             backgroundColor: "#2b3a4f",
           }}
         />
+        {/* Fireflies (Part of the background scene) */}
+        <div className="firefly"></div>
+        <div className="firefly"></div>
+        <div className="firefly"></div>
+        <div className="firefly"></div>
+        <div className="firefly"></div>
+        <div className="firefly"></div>
+        <div className="firefly"></div>
       </div>
       <div className="relative z-10 w-full min-h-screen animate-fadeIn">
         {isSplashLoaded ? (
@@ -89,14 +97,6 @@ export default function Home() {
         {isLoaded ? (
           <>
             <MoreInfo />
-            {/* Fireflies divs */}
-            <div className="firefly"></div>
-            <div className="firefly"></div>
-            <div className="firefly"></div>
-            <div className="firefly"></div>
-            <div className="firefly"></div>
-            <div className="firefly"></div>
-            <div className="firefly"></div>
           </>
         ) : null}
       </div>
