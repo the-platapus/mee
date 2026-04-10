@@ -1,9 +1,18 @@
 .header-icons {
      display: flex;
      justify-content: center;
-     gap: 5px;
+     gap: 15px;
      animation: fadeDown 2.0s ease forwards;
      opacity: 0;
+     margin-top: 2rem;
+}
+.header-icons a {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+}
+.header-icons a:hover {
+    transform: scale(1.3) translateY(-5px);
+    filter: drop-shadow(0 0 10px rgba(236, 147, 63, 0.6));
 }
 h1 {
     margin: 0;
@@ -40,19 +49,20 @@ h3 {
     padding-bottom: '17%';
 }
     .tagline {
-      margin: 1rem 0;
-      min-height: 2rem; /* keeps space stable */
-      letter-spacing: 1px;
+      margin: 1.5rem 0;
+      min-height: 2.8rem; /* keeps space stable */
+      letter-spacing: 2px;
       color: #ec933f;
       font-family: var(--font-montserrat);
       font-optical-sizing: auto;
-      font-weight: 500;
+      font-weight: 600;
       font-style: normal;
-      font-size: 2.7vb;
+      font-size: 3.2vb;
       text-align: center;
       animation: fadeUp 3.4s ease forwards;
       padding-left: 3vb;
       padding-right: 3vb;
+      opacity: 0.9;
     }
 
     .cursor {
@@ -76,4 +86,12 @@ h3 {
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(50px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    .fa-circle-arrow-right {
+        animation: pulse 2s infinite ease-in-out;
     }

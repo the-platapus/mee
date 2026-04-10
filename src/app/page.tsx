@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Script from "next/script";
-// import MoreInfo from "./moreinfo/page";
+import MoreInfo from "./moreinfo/page";
 import HomePage from "./home/page";
 import "./globals.css";
 import "./fireflies.css";
@@ -10,29 +10,37 @@ import "./fireflies.css";
 export default function Home() {
   const [isSplashLoaded, setIsSplashLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [bgSrc, setBgSrc] = useState("");
+  const [blurAmount, setBlurAmount] = useState(0);
 
   useEffect(() => {
-    // Lazy load background image
-    const loadBackgroundImage = () => {
-      const img = new Image();
-      img.src = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnitsmol.webp";
+    const smolImg = "/assets/images/plsloadgoddamnitsmol.webp";
+    const fullImg = "/assets/images/plsloadgoddamnit.png";
 
-      img.onload = () => {
-        // Apply the loaded image as background
-        document.body.style.backgroundImage = `url(${img.src})`;
-        document.body.classList.add("loaded");
-
-        // Load the high-res version after the initial image loads
-        const highResImg = new Image();
-        highResImg.src = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnit.jpeg";
-
-        highResImg.onload = () => {
-          document.body.style.backgroundImage = `url(${highResImg.src})`;
-        };
+    const img = new Image();
+    img.src = smolImg;
+    img.onload = () => {
+      setBgSrc(smolImg);
+      
+      const highResImg = new Image();
+      highResImg.src = fullImg;
+      highResImg.onload = () => {
+        setBgSrc(fullImg);
       };
     };
+  }, []);
 
-    loadBackgroundImage();
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      // Blur increases by 1px for every 10% of viewport scrolled, up to 10px
+      const newBlur = Math.min(scrollY / (viewportHeight * 0.1), 10);
+      setBlurAmount(newBlur);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
 
@@ -53,24 +61,37 @@ export default function Home() {
 
   return (
     <>
-      {isSplashLoaded ? (
-        <>
-          <HomePage />
-        </>
-      ) : null}
-      {isLoaded ? (
-        <>
-          {/* <MoreInfo /> */}
-          {/* Fireflies divs */}
-          <div className="firefly"></div>
-          <div className="firefly"></div>
-          <div className="firefly"></div>
-          <div className="firefly"></div>
-          <div className="firefly"></div>
-          <div className="firefly"></div>
-          <div className="firefly"></div>
-        </>
-      ) : null}
+      <div
+        id="bg-layer"
+        className="fixed top-0 left-0 w-full h-full bg-cover bg-center bg-no-repeat transition-all duration-300 ease-out"
+        style={{
+          backgroundImage: bgSrc ? `url("${bgSrc}")` : "none",
+          backgroundColor: "#2b3a4f",
+          zIndex: -1,
+          filter: `blur(${blurAmount}px)`,
+          transform: `scale(${1 + blurAmount * 0.015})`,
+        }}
+      />
+      <div className="relative z-10 w-full min-h-screen">
+        {isSplashLoaded ? (
+          <>
+            <HomePage />
+          </>
+        ) : null}
+        {isLoaded ? (
+          <>
+            <MoreInfo />
+            {/* Fireflies divs */}
+            <div className="firefly"></div>
+            <div className="firefly"></div>
+            <div className="firefly"></div>
+            <div className="firefly"></div>
+            <div className="firefly"></div>
+            <div className="firefly"></div>
+            <div className="firefly"></div>
+          </>
+        ) : null}
+      </div>
       <Script src="https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/oneko/oneko.js" strategy="afterInteractive" data-cat="https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/oneko/oneko.gif" />
     </>
   );

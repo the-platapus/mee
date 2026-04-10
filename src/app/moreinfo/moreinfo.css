@@ -1,15 +1,16 @@
 html {
     overflow-wrap: break-word;
 }
+
 body {
     margin: 0;
     text-align: left;
     width: 100%;
     background-color: transparent;
 }
-h1 {
 
-}
+h1 {}
+
 h2 {
     padding: 3%;
     font-size: 29px;
@@ -20,8 +21,9 @@ h2 {
     line-height: 47px;
     vertical-align: middle;
     margin: 0;
-    color: #1c4587;
+    color: #ec933f;
 }
+
 h3 {
     padding: 3%;
     font-size: 15px;
@@ -31,30 +33,51 @@ h3 {
     font-style: normal;
     line-height: 30px;
     margin: 0;
-    color: #1c4587;
+    color: #ec933f;
 }
+
 .main-caption {
-    /* background-size: cover;
-    background-position: center;
-    background-clip: border-box;
-    background-repeat: no-repeat;
-    background-attachment: center; */
-    height: 100vh;
+    background-color: transparent;
+    min-height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
 .sub-caption {
     display: flex;
     gap: 3vh;
-    padding: 3.5%;
+    padding: 10% 8%;
     flex-direction: row;
-    background-color: white;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
 }
+
+.quotes,
+.aim {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    height: 100%;
+}
+
 .about {
-    /* padding: 3.5%;
-    background-image: url(/assets/images/plsloadgoddamnit.jpg);
-    background-size: cover;
-    background-position: bottom;
-    background-clip: border-box; */
+    padding: 5% 8%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.paragraph {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
 }
 
 @media (max-width: 480px) {

@@ -2,23 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background-color: #2b3a4f;
+}
+
 html, body {
   height: 100%;
-  background-color:#2b3a4f;
-  background-size: cover;
-  background-position: center;
-  background-clip: border-box;
-  position: relative;
+  background: transparent;
   overflow-x: hidden;
   overflow-y: auto;
+  scroll-snap-type: y mandatory;
   margin: 0;
   padding: 0;
   line-height: 0.95;
   font-family: var(--font-dancing-script), "Brush Script MT", "Comic Sans MS", cursive;
   user-select: none;
-  transition: background-image 3s ease-in-out;
-  animation: backgroundFadeIn 3s ease forwards;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   filter: brightness(0%);
+  animation: backgroundFadeIn 3s ease forwards;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 @keyframes backgroundFadeIn {
@@ -30,9 +41,9 @@ html, body {
   }
 }
 
-body.loaded {
+/* body.loaded {
   background-image: url("https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnit.png");
-}
+} */
 
 div {
   text-align: center;
@@ -69,6 +80,8 @@ html {
   -webkit-text-size-adjust: 100%;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 html::-webkit-scrollbar {

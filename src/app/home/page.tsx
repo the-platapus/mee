@@ -46,7 +46,7 @@ export default function HomePage() {
   }, [charIndex, isDeleting, skillIndex]);
 
   return (
-    <>
+    <div className="h-screen w-full snap-start">
       <h1 className={`${zoomOut ? "animate-zoomOut" : ""}`}>Abdullah Aamir</h1>
       <div className="header-icons">
         <a
@@ -68,7 +68,7 @@ export default function HomePage() {
         <a
           aria-label="Next Page"
           target="_self"
-          href="https://sites.google.com/view/abdullah1325/who-is-the_platapus"
+          href="#more-info"
           rel="noreferrer"
         >
           <i className="cursor-pointer icon fa-solid fa-circle-arrow-right colo"></i>
@@ -78,6 +78,6 @@ export default function HomePage() {
         <span id="typing">{displayText}</span>
         <span className="cursor"></span>
       </p>
-    </>
+    </div>
   );
 }
