@@ -9,7 +9,11 @@ const skills = [
   "3D Artist and Photographer/Videographer",
 ];
 
-export default function HomePage() {
+interface HomePageProps {
+  onUnlockScroll?: () => void;
+}
+
+export default function HomePage({ onUnlockScroll }: HomePageProps) {
   const [skillIndex, setSkillIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -65,14 +69,13 @@ export default function HomePage() {
         >
           <i className="cursor-pointer icon fa-solid fa-envelope" aria-hidden="true"></i>
         </a>
-        <a
+        <button
           aria-label="Next Page"
-          target="_self"
-          href="#more-info"
-          rel="noreferrer"
+          onClick={onUnlockScroll}
+          style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
         >
           <i className="cursor-pointer icon fa-solid fa-circle-arrow-right colo"></i>
-        </a>
+        </button>
       </div>
       <p className="tagline">
         <span id="typing">{displayText}</span>

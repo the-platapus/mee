@@ -13,6 +13,17 @@ export default function Home() {
   const [bgSrc, setBgSrc] = useState("");
   const [blurAmount, setBlurAmount] = useState(0);
 
+  const handleNextClick = () => {
+    setIsLoaded(true);
+    // Wait for MoreInfo to render, then scroll to it
+    setTimeout(() => {
+      const el = document.getElementById("more-info");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 50);
+  };
+
   useEffect(() => {
     const smolImg = "/assets/images/plsloadgoddamnitsmol.webp";
     const fullImg = "/assets/images/plsloadgoddamnit.png";
@@ -51,12 +62,7 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, []);
+
 
 
   return (
@@ -91,7 +97,7 @@ export default function Home() {
       <div className="relative z-10 w-full min-h-screen animate-fadeIn">
         {isSplashLoaded ? (
           <>
-            <HomePage />
+            <HomePage onUnlockScroll={handleNextClick} />
           </>
         ) : null}
         {isLoaded ? (
