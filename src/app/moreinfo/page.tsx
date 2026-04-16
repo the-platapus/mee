@@ -22,7 +22,7 @@ export default function MoreInfo() {
           </h3>
         </div>
         <div className="aim glass">
-          <h2 className="text-[29px] font-lexend font-medium leading-[1.2] m-0 text-[#ec933f] mb-4">
+          <h2 className="text-[86px] font-lexend font-large leading-[1.2] m-0 text-[#ec933f] mb-4">
             I aim
           </h2>
           <h3 className="text-[15px] font-lexend font-light leading-[30px] m-0 text-[#ec933f] pt-0">

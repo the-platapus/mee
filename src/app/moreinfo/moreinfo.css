@@ -60,7 +60,8 @@ h3 {
 .aim {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: start;
+    /* justify-content: start; */
     padding: 2rem;
     height: 100%;
 }
