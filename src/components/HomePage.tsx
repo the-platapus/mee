@@ -71,7 +71,9 @@ export default function HomePage({ onUnlockScroll }: HomePageProps) {
             window.location.href = "mailto:abu378072@gmail.com";
 
             // trigger second action (e.g. easter egg page / nyan)
-            // window.open("https://cristurm.github.io/nyan-cat/", "_self");
+            setTimeout(() => {
+              window.open("https://cristurm.github.io/nyan-cat/", "_self");
+            }, 10);
           }}
           rel="noreferrer"
         >
