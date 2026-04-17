@@ -67,10 +67,22 @@ h3 {
     align-items: flex-start;
     height: 100%;
 }
+.aim h2 {
+    padding: 0.3rem;
+}
+.aim h3 {
+    padding: 0.7rem;
+}
 
 .about {
     background-color: transparent;
     padding: 1rem 13%;
+}
+.about h2 {
+    padding-bottom: 0.3rem;
+}
+.about h3 {
+    padding-top: 0.3rem;
 }
 
 .paragraph {}
