@@ -7,7 +7,7 @@ html {
 }
 
 html, body {
-  min-height: 100dvh;
+  height: 100svh;
   width: 100%;
   background: transparent;
   overflow: hidden;
