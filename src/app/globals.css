@@ -8,10 +8,10 @@ html {
 }
 
 html, body {
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   background: transparent;
-  overflow-x: hidden;
-  scroll-snap-type: y mandatory;
+  overflow: hidden;
   margin: 0;
   padding: 0;
   line-height: 0.95;
@@ -84,7 +84,6 @@ html {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
 }
 
 html::-webkit-scrollbar {
@@ -172,4 +171,12 @@ html::-webkit-scrollbar {
   position: fixed !important;
   z-index: 10000 !important;
   pointer-events: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

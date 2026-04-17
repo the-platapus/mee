@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Script from "next/script";
 import MoreInfo from "@/components/MoreInfo";
 import HomePage from "@/components/HomePage";
@@ -12,6 +12,7 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [bgSrc, setBgSrc] = useState("");
   const [blurAmount, setBlurAmount] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleNextClick = () => {
     setIsLoaded(true);
@@ -43,15 +44,23 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      if (!scrollContainerRef.current) return;
+      const scrollY = scrollContainerRef.current.scrollTop;
       const viewportHeight = window.innerHeight;
       // Blur increases by 1px for every 10% of viewport scrolled, up to 10px
       const newBlur = Math.min(scrollY / (viewportHeight * 0.1), 10);
       setBlurAmount(newBlur);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const scroller = scrollContainerRef.current;
+    if (scroller) {
+      scroller.addEventListener("scroll", handleScroll, { passive: true });
+    }
+    return () => {
+      if (scroller) {
+        scroller.removeEventListener("scroll", handleScroll);
+      }
+    };
   }, []);
 
 
@@ -94,7 +103,10 @@ export default function Home() {
         <div className="firefly"></div>
         <div className="firefly"></div>
       </div>
-      <div className="relative z-10 w-full min-h-screen animate-fadeIn">
+      <div
+        ref={scrollContainerRef}
+        className="relative z-10 w-full h-screen overflow-y-auto snap-y snap-mandatory no-scrollbar animate-fadeIn"
+      >
         {isSplashLoaded ? (
           <>
             <HomePage onUnlockScroll={handleNextClick} />
@@ -106,7 +118,7 @@ export default function Home() {
           </>
         ) : null}
       </div>
-      <Script src="/oneko/oneko.js" strategy="afterInteractive" data-cat="/oneko/oneko.gif" />
+      <Script src="https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/oneko/oneko.js" strategy="afterInteractive" data-cat="https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/oneko/oneko.gif" />
     </>
   );
 }
