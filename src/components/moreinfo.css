@@ -70,20 +70,12 @@ h3 {
 
 .about {
     background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     padding: 1rem 13%;
 }
 
-.paragraph {
-    max-width: 900px;
-    width: 100%;
-    text-align: center;
-}
+.paragraph {}
 
-@media (max-width: 480px) {
+@media (max-width: 900px) {
     .sub-caption {
         flex-direction: column;
     }
