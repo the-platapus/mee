@@ -6,6 +6,10 @@ import { dancingScript, montserrat, lexend } from "./fonts";
 export const metadata: Metadata = {
   title: "the-platapus",
   description: "Personal Portfolio",
+  themeColor: "#2b3a4f",
+  other: {
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+  },
 };
 
 export default function RootLayout({
@@ -15,9 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dancingScript.variable} ${montserrat.variable} ${lexend.variable}`}>
-      <head>
+      {/* <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
+        <meta name="theme-color" content="#2b3a4f" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+      </head> */}
       <body>
         {children}
         <link
