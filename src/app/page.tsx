@@ -25,14 +25,14 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const smolImg = "/assets/images/plsloadgoddamnitsmol.webp";
-    const fullImg = "/assets/images/plsloadgoddamnit.png";
+    const smolImg = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnitsmol.webp";
+    const fullImg = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnit.png";
 
     const img = new Image();
     img.src = smolImg;
     img.onload = () => {
       setBgSrc(smolImg);
-      
+
       const highResImg = new Image();
       highResImg.src = fullImg;
       highResImg.onload = () => {
@@ -67,7 +67,7 @@ export default function Home() {
 
   return (
     <>
-      <div 
+      <div
         id="bg-container"
         className="fixed top-0 left-0 w-full h-full pointer-events-none"
         style={{
