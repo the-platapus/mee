@@ -49,9 +49,9 @@ h3 {
 .sub-caption {
     display: flex;
     gap: 3vh;
-    padding: 10% 8%;
+    /* padding: 10% 8%; */
     flex-direction: row;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.609);
     align-items: center;
     justify-content: center;
 }
