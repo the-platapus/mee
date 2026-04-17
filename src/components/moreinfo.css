@@ -46,14 +46,18 @@ h3 {
     align-items: center;
 }
 
+.main-caption h2 {
+    padding: 0 2rem;
+    font-size: 17px;
+}
+
 .sub-caption {
     display: flex;
-    /* gap: 3vh; */
     flex-direction: row;
     background-color: rgba(0, 0, 0, 0.609);
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 13rem;
+    padding: 1rem 13%;
 }
 
 .quotes,
@@ -61,8 +65,6 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* justify-content: start; */
-    /* padding: 2rem; */
     height: 100%;
 }
 
@@ -72,7 +74,7 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0.5rem 13rem;
+    padding: 1rem 13%;
 }
 
 .paragraph {
