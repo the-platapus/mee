@@ -1,5 +1,4 @@
-// import type { Metadata } from "next";
-// import { Lexend, Montserrat } from "next/font/google";
+"use client";
 
 import "./moreinfo.css";
 

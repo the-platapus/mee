@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Script from "next/script";
-import MoreInfo from "./moreinfo/page";
-import HomePage from "./home/page";
+import MoreInfo from "@/components/MoreInfo";
+import HomePage from "@/components/HomePage";
 import "./globals.css";
 import "./fireflies.css";
 

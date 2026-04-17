@@ -9,7 +9,7 @@ const skills = [
   "3D Artist and Photographer/Videographer",
 ];
 
-interface HomePageProps {
+export interface HomePageProps {
   onUnlockScroll?: () => void;
 }
 
