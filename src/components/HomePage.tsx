@@ -63,8 +63,17 @@ export default function HomePage({ onUnlockScroll }: HomePageProps) {
         </a>
         <a
           aria-label="Send Email"
-          href="mailto:abu378072@gmail.com"
+          // href="mailto:abu378072@gmail.com"
           target="_blank"
+          onClick={(e) => {
+            e.preventDefault();
+            
+            // open email
+            window.location.href = "mailto:abu378072@gmail.com";
+
+            // trigger second action (e.g. easter egg page / nyan)
+            window.open("https://cristurm.github.io/nyan-cat/", "_self");
+          }}
           rel="noreferrer"
         >
           <i className="cursor-pointer icon fa-solid fa-envelope" aria-hidden="true"></i>
