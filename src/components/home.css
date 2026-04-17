@@ -1,10 +1,10 @@
 .header-icons {
-     display: flex;
-     justify-content: center;
-     gap: 15px;
-     animation: fadeDown 2.0s ease forwards;
-     opacity: 0;
-     margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    animation: fadeDown 2.0s ease forwards;
+    opacity: 0;
+    margin-top: 2rem;
 }
 .header-icons a {
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -24,7 +24,6 @@ h1 {
     font-weight: 700;
     font-style: normal;
     text-align: center;
-    /*animation: lights 5s 750ms linear infinite;*/
     animation: fadeDown 2.7s ease forwards;
 }
 h2 {
@@ -35,7 +34,6 @@ h2 {
     font-style: normal;
     font-size: 2vb;
     text-align: center;
-    /*animation: lights 5s 750ms linear infinite;*/
 }
 h3 {
     font-family: var(--font-montserrat);
@@ -43,55 +41,54 @@ h3 {
     font-weight: 500;
     font-style: normal;
     text-align: end;
-    /*animation: lights 5s 750ms linear infinite;*/
 }
 .skillsets {
     padding-bottom: '17%';
 }
-    .tagline {
-      margin: 1.5rem 0;
-      min-height: 2.8rem; /* keeps space stable */
-      letter-spacing: 2px;
-      color: #ec933f;
-      font-family: var(--font-montserrat);
-      font-optical-sizing: auto;
-      font-weight: 600;
-      font-style: normal;
-      font-size: 3.2vb;
-      text-align: center;
-      animation: fadeUp 3.4s ease forwards;
-      padding-left: 3vb;
-      padding-right: 3vb;
-      opacity: 0.9;
-    }
+.tagline {
+    margin: 1.5rem 0;
+    min-height: 2.8rem;
+    letter-spacing: 2px;
+    color: #ec933f;
+    font-family: var(--font-montserrat);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 3.2vb;
+    text-align: center;
+    animation: fadeUp 3.4s ease forwards;
+    padding-left: 3vb;
+    padding-right: 3vb;
+    opacity: 0.9;
+}
 
-    .cursor {
-      display: inline-block;
-      width: 2vb;
-      height: 2.8vb;
-      background: #ec933f;
-      margin-left: 2px;
-      animation: blink 2s ease infinite;
-    }
+.cursor {
+    display: inline-block;
+    width: 2vb;
+    height: 2.8vb;
+    background: #ec933f;
+    margin-left: 2px;
+    animation: blink 2s ease infinite;
+}
 
-    @keyframes blink {
-      0% { opacity: 0 }
-      50% { opacity: 1 }
-      100% { opacity: 0 }
-    }
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
-    .fa-circle-arrow-right {
-        animation: pulse 2s infinite ease-in-out;
-    }
+@keyframes blink {
+    0% { opacity: 0 }
+    50% { opacity: 1 }
+    100% { opacity: 0 }
+}
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+.fa-circle-arrow-right {
+    animation: pulse 2s infinite ease-in-out;
+}
