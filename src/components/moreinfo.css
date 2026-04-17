@@ -48,31 +48,31 @@ h3 {
 
 .sub-caption {
     display: flex;
-    gap: 3vh;
-    /* padding: 10% 8%; */
+    /* gap: 3vh; */
     flex-direction: row;
     background-color: rgba(0, 0, 0, 0.609);
     align-items: center;
     justify-content: center;
+    padding: 0.5rem 13rem;
 }
 
 .quotes,
 .aim {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
     /* justify-content: start; */
-    padding: 2rem;
+    /* padding: 2rem; */
     height: 100%;
 }
 
 .about {
-    padding: 5% 8%;
     background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 0.5rem 13rem;
 }
 
 .paragraph {

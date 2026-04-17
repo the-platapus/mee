@@ -36,7 +36,7 @@ export default function MoreInfo() {
       <div className="about">
         <div className="paragraph">
           <h2 className="text-[30px] font-lexend font-normal leading-[47px] m-0 text-[#ec933f] pb-4">About me.</h2>
-          <h3 className="text-[15px] font-lexend font-light leading-[30px] m-0 text-[#ec933f] pt-0">
+          <h3 className="text-[15px] font-lexend font-light leading-[27px] m-0 text-[#ec933f] pt-0">
             Currently completing my Bachelor&apos;s Degree in Defence Forensics and Cybersecurity, I aim to gather the most experience along the way of my learning path with noticeable grades so I can obtain my spot in the companies that are well known around the world. <br />
             As of this generation, the worth and value of a person is dependent on the skillsets they possess and how keen they are at executing it.
           </h3>
