@@ -4,11 +4,11 @@
 
 html {
   background-color: #2b3a4f;
-  min-height: 100dvh;
+  min-height: 100svh;
 }
 
 html, body {
-  height: 100dvh;
+  height: 100svh;
   width: 100vw;
   background: transparent;
   overflow: hidden;
