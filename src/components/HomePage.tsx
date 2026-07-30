@@ -53,7 +53,7 @@ export default function HomePage({ onUnlockScroll }: HomePageProps) {
 
   return (
     <div className="h-screen w-full snap-start">
-      <h1 className={`${zoomOut ? "animate-zoomOut" : ""}`}>Abdullah Aamir</h1>
+      <h1 className={`${zoomOut ? "animate-zoomOut" : ""}`} style={{ paddingTop: "50vb" }}>Abdullah Aamir</h1>
       <div className="header-icons">
         <a
           aria-label="My Github Profile"
