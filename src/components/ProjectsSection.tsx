@@ -264,14 +264,14 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
         className="w-1/2 h-full z-20 flex flex-col justify-center items-center px-8 sm:px-12 md:px-16 lg:px-24 will-change-[opacity,filter]"
         style={{ opacity: 1, filter: "blur(0px)" }}
       >
-        <div className="pointer-events-auto w-full max-w-lg text-left">
+        <div className="pointer-events-auto w-full max-w-[42vw] text-left">
           <Draggable className="block w-fit mb-2">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white m-0 font-lexend leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+            <h1 className="text-[3.8vw] font-extrabold tracking-tight text-white m-0 font-lexend leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
               {activeProject.title}
             </h1>
           </Draggable>
           <Draggable className="block w-fit mb-4">
-            <p className="text-amber-400 font-semibold text-sm sm:text-base md:text-lg m-0 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <p className="text-amber-400 font-semibold text-[1.4vw] m-0 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               {activeProject.subtitle}
             </p>
           </Draggable>
@@ -385,7 +385,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                 />
               );
             })}
-            <span className="text-xs text-amber-400 font-semibold tracking-wider uppercase ml-2 select-none">
+            <span className="text-[1vw] text-amber-400 font-semibold tracking-wider uppercase ml-2 select-none">
               {activeProject.section}
             </span>
           </div>
