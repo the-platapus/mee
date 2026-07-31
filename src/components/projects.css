@@ -1,30 +1,13 @@
 .projects-viewport-lock {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100dvh;
-  z-index: 50;
-  background-color: #0c1017;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   font-family: "Lexend", sans-serif;
   color: #ffffff;
-  animation: lockInFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes lockInFade {
-  0% {
-    opacity: 0;
-    transform: scale(0.95) translateY(20px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  scroll-snap-align: start;
 }
 
 /* Background Carousel Slideshow Styling */
@@ -74,17 +57,25 @@
   transform: scale(1.04);
 }
 
-/* Vignette overlay for premium depth & typography legibility */
-.slideshow-vignette {
-  position: absolute;
+/* Vignette overlay applied to website background when scrolling into ProjectsSection */
+.website-bg-vignette {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
   background:
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 90%),
-    /* linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, transparent 40%, rgba(0, 0, 0, 0.95) 100%); */
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 90%);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+.website-bg-vignette.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 @keyframes lazyBlurIn {
