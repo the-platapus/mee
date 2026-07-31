@@ -58,9 +58,9 @@ h3 {
     color: #ec933f;
     font-family: var(--font-montserrat);
     font-optical-sizing: auto;
-    font-weight: 600;
+    font-weight: 500;
     font-style: normal;
-    font-size: 3.2vb;
+    font-size: 2.5vb;
     text-align: center;
     animation: fadeUp 3.4s ease forwards;
     padding-left: 3vb;
