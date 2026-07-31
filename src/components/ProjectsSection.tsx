@@ -185,7 +185,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       const darkOpacity = progress * 0.75;
 
       wrapper.style.transform = `scale(${scale})`;
-      wrapper.style.borderRadius = `${progress * 32}px`;
+      wrapper.style.borderRadius = "40px";
       overlay.style.opacity = `${darkOpacity}`;
     });
 
@@ -254,7 +254,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
     <div
       ref={containerRef}
       id="projects"
-      className="projects-viewport-lock select-none bg-transparent snap-start relative flex flex-row items-center justify-between overflow-hidden w-full h-screen"
+      className="projects-viewport-lock select-none bg-transparent snap-start relative flex flex-row items-center justify-between overflow-hidden w-full h-screen min-h-screen max-h-screen overscroll-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -307,89 +307,102 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
         </div>
       </div>
 
-      {/* Right Side: Snap-Scrolling Slideshow Container */}
-      <div className="w-1/2 h-[76vh] sm:h-[80vh] relative z-10 flex flex-col justify-center px-4 sm:pr-12 md:pr-16 lg:pr-20 sm:pl-2">
-        <div className="w-full h-full rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.7)] bg-slate-950/80 relative group transition-all duration-500 hover:border-amber-500/30 hover:shadow-[0_25px_80px_rgba(236,147,63,0.15)]">
-          {/* Vertically Snap-Scrolling Backgrounds */}
+      {/* Right Side: Pure Block Relative Wrapper ensuring standard CSS absolute positioning against Far Right Wall */}
+      <div className="w-1/2 h-full relative z-10 block p-0">
+        {/* Inner Flex Container exclusively dedicated to centering the Slideshow Card */}
+        <div className="w-full h-full flex items-center justify-center">
+          {/* Slideshow Card with direct right margin spacing */}
           <div
-            ref={scrollerRef}
-            onScroll={updateScrollAnimations}
-            className="w-full h-full overflow-y-auto snap-y snap-mandatory no-scrollbar relative z-10"
-            style={{ scrollBehavior: "smooth" }}
+            className="w-[95%] max-w-[660px] mr-16 sm:mr-20 md:mr-24 h-[64vh] sm:h-[68vh] rounded-[2.5rem] overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.7)] bg-slate-950/80 relative group transition-all duration-500 hover:shadow-[0_25px_80px_rgba(236,147,63,0.15)] [clip-path:inset(0_round_2.5rem)]"
+            style={{ WebkitMaskImage: "-webkit-radial-gradient(white, black)" }}
           >
-            {showcaseProjects.map((proj, projIndex) => {
-              const isCurrentProject = projIndex === activeIndex;
-              const currentImgUrl = proj.images[isCurrentProject ? imageIndex : 0] || "";
+            {/* Vertically Snap-Scrolling Backgrounds */}
+            <div
+              ref={scrollerRef}
+              onScroll={updateScrollAnimations}
+              className="w-full h-full overflow-y-auto snap-y snap-mandatory no-scrollbar relative z-10 overscroll-contain"
+              style={{ scrollBehavior: "smooth" }}
+            >
+              {showcaseProjects.map((proj, projIndex) => {
+                const isCurrentProject = projIndex === activeIndex;
+                const currentImgUrl = proj.images[isCurrentProject ? imageIndex : 0] || "";
 
-              return (
-                <div
-                  key={proj.id}
-                  className="w-full h-full snap-start relative flex-shrink-0 overflow-hidden bg-black flex items-center justify-center"
-                >
-                  {/* Animated inner picture wrapper that zooms out & zooms in */}
+                return (
                   <div
-                    ref={(el) => {
-                      slideWrappersRef.current[projIndex] = el;
-                    }}
-                    className="w-full h-full relative origin-center overflow-hidden transition-none will-change-transform"
-                    style={{
-                      transform: projIndex === 0 ? "scale(1)" : "scale(0.85)",
-                    }}
+                    key={proj.id}
+                    className="w-full h-full snap-start relative flex-shrink-0 overflow-hidden bg-black flex items-center justify-center rounded-[2.5rem]"
                   >
-                    {/* Deep ambient blurred background layer */}
-                    <div
-                      className="slideshow-blur-layer"
-                      style={{ backgroundImage: `url("${currentImgUrl}")` }}
-                    />
-
-                    {/* High-res foreground screenshot layer */}
-                    {proj.images.map((img, idx) => (
-                      <img
-                        key={img}
-                        src={img}
-                        alt={`${proj.title} screenshot ${idx + 1}`}
-                        className={`slideshow-sharp-layer ${!isCurrentProject ? (idx === 0 ? "active" : "inactive") : idx === imageIndex ? "active" : "inactive"
-                          }`}
-                      />
-                    ))}
-
-                    {/* Real-time darkening & un-darkening overlay */}
+                    {/* Animated inner picture wrapper that zooms out & zooms in */}
                     <div
                       ref={(el) => {
-                        darkeningOverlaysRef.current[projIndex] = el;
+                        slideWrappersRef.current[projIndex] = el;
                       }}
-                      className="absolute inset-0 bg-black z-10 pointer-events-none transition-none will-change-opacity"
+                      className="w-full h-full relative origin-center rounded-[2.5rem] overflow-hidden [clip-path:inset(0_round_2.5rem)] transition-none will-change-transform"
                       style={{
-                        opacity: projIndex === 0 ? 0 : 0.75,
+                        transform: projIndex === 0 ? "scale(1)" : "scale(0.85)",
+                        WebkitMaskImage: "-webkit-radial-gradient(white, black)"
                       }}
-                    />
+                    >
+                      {/* Deep ambient blurred background layer */}
+                      <div
+                        className="slideshow-blur-layer"
+                        style={{ backgroundImage: `url("${currentImgUrl}")` }}
+                      />
+
+                      {/* High-res foreground screenshot layer */}
+                      {proj.images.map((img, idx) => (
+                        <img
+                          key={img}
+                          src={img}
+                          alt={`${proj.title} screenshot ${idx + 1}`}
+                          className={`slideshow-sharp-layer ${!isCurrentProject ? (idx === 0 ? "active" : "inactive") : idx === imageIndex ? "active" : "inactive"
+                            }`}
+                        />
+                      ))}
+
+                      {/* Real-time darkening & un-darkening overlay */}
+                      <div
+                        ref={(el) => {
+                          darkeningOverlaysRef.current[projIndex] = el;
+                        }}
+                        className="absolute inset-0 bg-black z-10 pointer-events-none transition-none will-change-opacity"
+                        style={{
+                          opacity: projIndex === 0 ? 0 : 0.75,
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
-      {/* Absolute In-Place Foreground: Bottom Dot Navigation & Section Name */}
-      <div className="absolute bottom-4 sm:bottom-6 left-0 w-full z-30 flex justify-center items-center pointer-events-none">
-        <Draggable className="inline-block pointer-events-auto">
-          <div className="flex items-center gap-3 bg-slate-950/80 backdrop-blur-md px-6 py-3 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
-            {showcaseProjects.map((proj, idx) => {
-              const isCurrent = idx === activeIndex;
-              return (
-                <button
-                  key={proj.id}
-                  aria-label={`Switch to ${proj.title}`}
-                  onClick={() => scrollToProject(idx)}
-                  className={`indicator-dot ${isCurrent ? "active" : ""}`}
-                />
-              );
-            })}
-            <span className="text-[1vw] text-amber-400 font-semibold tracking-wider uppercase ml-2 select-none">
-              {activeProject.section}
-            </span>
-          </div>
-        </Draggable>
+
+        {/* Absolute Foreground: Vertical Navigation Bar Anchored directly to Far Right Wall of the Pure Block Parent */}
+        <div className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-3 left-auto z-[999] pointer-events-none">
+          <Draggable className="inline-block pointer-events-auto">
+            <div className="flex flex-col items-center gap-3.5 bg-slate-950/80 backdrop-blur-md py-6 px-3 sm:px-3.5 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-white/10">
+              {showcaseProjects.map((proj, idx) => {
+                const isCurrent = idx === activeIndex;
+                return (
+                  <button
+                    key={proj.id}
+                    aria-label={`Switch to ${proj.title}`}
+                    onClick={() => scrollToProject(idx)}
+                    className={`indicator-dot vertical ${isCurrent ? "active" : ""}`}
+                  />
+                );
+              })}
+              <div className="flex flex-col items-center mt-2 gap-1 text-[0.85vw] text-amber-400 font-extrabold select-none uppercase">
+                {activeProject.section.split("").map((char, index) => (
+                  <span key={index} className="block text-center leading-none">
+                    {char === " " ? "\u00A0" : char}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Draggable>
+        </div>
       </div>
     </div>
   );

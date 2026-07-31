@@ -147,6 +147,11 @@
   transform: scale(1);
 }
 
+.indicator-dot.vertical.active {
+  width: 8px;
+  height: 24px;
+}
+
 /* Hide scrollbar for clean vertical background snap scrolling */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
