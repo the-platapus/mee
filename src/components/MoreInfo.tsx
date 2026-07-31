@@ -2,7 +2,11 @@
 
 import "./moreinfo.css";
 
-export default function MoreInfo() {
+interface MoreInfoProps {
+  onUnlockProjects?: () => void;
+}
+
+export default function MoreInfo({ onUnlockProjects }: MoreInfoProps = {}) {
   return (
     <div id="more-info" className="m-0 text-left w-full bg-transparent break-words snap-start">
       <div className="main-caption">
@@ -38,7 +42,20 @@ export default function MoreInfo() {
 
       <div className="about">
         <div className="paragraph">
-          <h2 className="text-[37px] text-left font-lexend font-normal leading-[47px] m-0 text-[#ec933f] pb-4">About me.</h2>
+          <h2 className="text-[37px] text-left font-lexend font-normal leading-[47px] m-0 text-[#ec933f] pb-4 flex items-center gap-4">
+            <span>About me.</span>
+            {onUnlockProjects && (
+              <button
+                aria-label="Unlock Projects Section"
+                onClick={onUnlockProjects}
+                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+                title="View Projects"
+                className="inline-flex items-center text-[#ec933f] hover:text-white transition-colors"
+              >
+                <i className="cursor-pointer icon fa-solid fa-circle-arrow-right text-3xl sm:text-4xl" aria-hidden="true"></i>
+              </button>
+            )}
+          </h2>
           <h3 className="text-[15px] text-left font-lexend font-light leading-[27px] m-0 text-[#ec933f] pt-0">
             Currently completing my Bachelor&apos;s Degree in Defence Forensics and Cybersecurity, I aim to gather the most experience along the way of my learning path with noticeable grades so I can obtain my spot in the companies that are well known around the world. <br />
             As of this generation, the worth and value of a person is dependent on the skillsets they possess and how keen they are at executing it.
