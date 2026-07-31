@@ -83,10 +83,10 @@ function Draggable({ children, className = "", resetOnDoubleClick = true }: Drag
         willChange: "transform",
       }}
       className={`relative select-none touch-none ${className} ${isDragging
-          ? "drop-shadow-[0_20px_30px_rgba(236,147,63,0.4)] brightness-110 filter"
-          : isHovered
-            ? "drop-shadow-[0_8px_16px_rgba(255,255,255,0.15)]"
-            : ""
+        ? "drop-shadow-[0_20px_30px_rgba(236,147,63,0.4)] brightness-110 filter"
+        : isHovered
+          ? "drop-shadow-[0_8px_16px_rgba(255,255,255,0.15)]"
+          : ""
         } transition-[filter,drop-shadow] duration-200`}
     >
       {children}
@@ -277,21 +277,21 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
           </Draggable>
 
           {/* Tech Stack Chips (Each individually draggable) */}
-          <div className="pt-2 flex flex-wrap items-center">
+          {/* <div className="pt-2 flex flex-wrap items-center">
             {activeProject.techStack.map((tech) => (
               <Draggable key={tech} className="inline-block mr-2 mb-2">
-                <span className="tech-chip shadow-lg backdrop-blur-md bg-slate-900/60 !m-0 block border-white/10 hover:border-amber-400/40">
+                <span className="tech-chip shadow-lg backdrop-blur-md bg-slate-900/60 !m-0 block ">
                   {tech}
                 </span>
               </Draggable>
             ))}
-          </div>
+          </div> */}
 
           {/* Carousel Manual Dots & Image Counter */}
           {activeProject.images.length > 1 && (
             <div className="pt-4 flex items-center gap-4">
               <Draggable className="inline-block">
-                <div className="carousel-indicators px-3.5 py-2 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10 shadow-lg">
+                <div className="carousel-indicators px-3.5 py-2 rounded-full bg-slate-900/60 backdrop-blur-md shadow-lg">
                   {activeProject.images.map((_, idx) => (
                     <button
                       key={idx}
@@ -302,11 +302,6 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                   ))}
                 </div>
               </Draggable>
-              <Draggable className="inline-block">
-                <span className="text-xs text-slate-200 font-mono drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] px-3 py-1.5 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10 shadow-lg block">
-                  {imageIndex + 1} / {activeProject.images.length}
-                </span>
-              </Draggable>
             </div>
           )}
         </div>
@@ -314,7 +309,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
 
       {/* Right Side: Snap-Scrolling Slideshow Container */}
       <div className="w-1/2 h-[76vh] sm:h-[80vh] relative z-10 flex flex-col justify-center px-4 sm:pr-12 md:pr-16 lg:pr-20 sm:pl-2">
-        <div className="w-full h-full rounded-3xl overflow-hidden border border-white/15 shadow-[0_25px_70px_rgba(0,0,0,0.7)] bg-slate-950/80 relative group transition-all duration-500 hover:border-amber-500/30 hover:shadow-[0_25px_80px_rgba(236,147,63,0.15)]">
+        <div className="w-full h-full rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.7)] bg-slate-950/80 relative group transition-all duration-500 hover:border-amber-500/30 hover:shadow-[0_25px_80px_rgba(236,147,63,0.15)]">
           {/* Vertically Snap-Scrolling Backgrounds */}
           <div
             ref={scrollerRef}
@@ -375,20 +370,10 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
           </div>
         </div>
       </div>
-
-      {/* Subtle nav hint in top right corner - draggable & interactive */}
-      <div className="absolute top-6 right-8 z-30 pointer-events-auto">
-        <Draggable className="inline-block">
-          <span className="text-xs tracking-wider font-medium text-slate-300 uppercase px-4 py-2 rounded-full bg-slate-950/70 backdrop-blur-md border border-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.5)] block hover:border-amber-400/40 transition-colors">
-            ✨ Scroll Slideshow, Arrow Keys, or Drag & Drop Typography
-          </span>
-        </Draggable>
-      </div>
-
       {/* Absolute In-Place Foreground: Bottom Dot Navigation & Section Name */}
       <div className="absolute bottom-4 sm:bottom-6 left-0 w-full z-30 flex justify-center items-center pointer-events-none">
         <Draggable className="inline-block pointer-events-auto">
-          <div className="flex items-center gap-3 bg-slate-950/80 backdrop-blur-md px-6 py-3 rounded-full border border-white/15 shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+          <div className="flex items-center gap-3 bg-slate-950/80 backdrop-blur-md px-6 py-3 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
             {showcaseProjects.map((proj, idx) => {
               const isCurrent = idx === activeIndex;
               return (
