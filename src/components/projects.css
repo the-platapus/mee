@@ -132,6 +132,7 @@
   cursor: pointer;
   border: none;
   padding: 0;
+  margin-bottom: 0.5rem;
 }
 
 .indicator-dot:hover {
@@ -162,4 +163,93 @@
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+.projects-viewport-lock {
+  justify-content: space-between;
+}
+
+/* Typography Left Alignment */
+.projects-typography-side {
+  text-align: left !important;
+  align-items: flex-start !important;
+  padding: 1rem 1.5rem 0.5rem;
+}
+
+.projects-typography-content,
+.project-title,
+.project-subtitle {
+  text-align: left !important;
+}
+
+.projects-vertical-nav {
+  position: absolute !important;
+  right: 1.5rem !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 9999 !important;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .projects-viewport-lock {
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 0;
+  }
+
+  .projects-typography-side {
+    width: 100% !important;
+    height: auto !important;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  .projects-typography-content {
+    max-width: 92% !important;
+    padding: 1rem 1.5rem 0.5rem !important;
+  }
+
+  .project-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.75rem) !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .project-subtitle {
+    font-size: clamp(0.95rem, 3.5vw, 1.25rem) !important;
+  }
+
+  .projects-slideshow-side {
+    width: 100% !important;
+    height: 100% !important;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0.5rem 0 1rem 0 !important;
+  }
+
+  .projects-slideshow-card {
+    width: 82% !important;
+    max-width: 540px !important;
+    height: 54vh !important;
+    max-height: 480px;
+    margin: 0 auto !important;
+    border-radius: 2rem !important;
+  }
+
+  .section-vertical-label {
+    font-size: 0.75rem !important;
+    gap: 0.15rem !important;
+    margin-top: 0.35rem !important;
+  }
+
+  .projects-vertical-nav {
+    right: 0.5rem !important;
+    left: auto !important;
+  }
 }
