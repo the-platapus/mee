@@ -29,7 +29,7 @@ function Draggable({ children, className = "", resetOnDoubleClick = true }: Drag
     };
     try {
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    } catch (err) { }
+    } catch { }
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
@@ -54,7 +54,7 @@ function Draggable({ children, className = "", resetOnDoubleClick = true }: Drag
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
       try {
         (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-      } catch (err) { }
+      } catch { }
     }
     setIsDragging(false);
   };
@@ -103,7 +103,6 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
   const [typographyIndex, setTypographyIndex] = useState<number>(0);
   const [imageIndex, setImageIndex] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [isInView, setIsInView] = useState<boolean>(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -173,7 +172,6 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
     if (!containerRef.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
         if (onActiveChange) {
           onActiveChange(entry.isIntersecting);
         }
@@ -291,6 +289,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
 
     let touchStartY = 0;
     let touchStartX = 0;
+    let resetTimer: NodeJS.Timeout | null = null;
 
     const handleTouchStart = (e: TouchEvent) => {
       if (targetIndexRef.current !== null) {
@@ -324,8 +323,8 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
           touchStartY = currentY;
           touchStartX = currentX;
 
-          if ((scroller as any)._resetTimer) clearTimeout((scroller as any)._resetTimer);
-          (scroller as any)._resetTimer = setTimeout(() => {
+          if (resetTimer) clearTimeout(resetTimer);
+          resetTimer = setTimeout(() => {
             if (scroller) scroller.style.scrollBehavior = "smooth";
           }, 60);
         }
@@ -350,8 +349,8 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
         scroller.style.scrollBehavior = "auto";
         scroller.scrollTop += e.deltaY;
 
-        if ((scroller as any)._resetTimer) clearTimeout((scroller as any)._resetTimer);
-        (scroller as any)._resetTimer = setTimeout(() => {
+        if (resetTimer) clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
           if (scroller) scroller.style.scrollBehavior = "smooth";
         }, 60);
       }
@@ -362,6 +361,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
     container.addEventListener("touchmove", handleTouchMove, { passive: false });
 
     return () => {
+      if (resetTimer) clearTimeout(resetTimer);
       container.removeEventListener("wheel", handleWheel);
       container.removeEventListener("touchstart", handleTouchStart);
       container.removeEventListener("touchmove", handleTouchMove);
