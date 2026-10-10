@@ -178,7 +178,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
     if (typographyRef.current) {
       const closestIndex = Math.round(scrollTop / height);
       const offsetFromCenter = Math.abs(scrollTop - closestIndex * height);
-      const isSettled = offsetFromCenter < height * 0.08;
+      const isSettled = offsetFromCenter < height * 0.15;
 
       if (!isSettled) {
         // Instant response on departure so blur-out never gets skipped even on fast scrolls
