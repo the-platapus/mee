@@ -32,6 +32,8 @@
   background-position: center;
   filter: blur(35px) brightness(0.35) saturate(1.4);
   transition: opacity 1.2s ease-in-out, background-image 0s;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
 }
 
 .slideshow-sharp-layer {
@@ -239,7 +241,6 @@
     height: 54vh !important;
     max-height: 480px;
     margin: 0 auto !important;
-    border-radius: 2rem !important;
   }
 
   .section-vertical-label {
@@ -297,17 +298,24 @@
   padding: 1rem 1.5rem 0.5rem;
   padding-left: 2rem;
   padding-right: 2rem;
-  will-change: opacity, filter;
+  will-change: auto;
 }
 @media (min-width: 640px) { .projects-typography-side { padding-left: 3rem; padding-right: 3rem; } }
 @media (min-width: 768px) { .projects-typography-side { padding-left: 4rem; padding-right: 4rem; } }
 @media (min-width: 1024px) { .projects-typography-side { padding-left: 6rem; padding-right: 6rem; } }
+
+.projects-animatable-typography {
+  will-change: opacity, filter;
+  width: 100%;
+}
 
 .projects-typography-content {
   pointer-events: auto;
   width: 100%;
   max-width: 42vw;
   text-align: left !important;
+  position: relative;
+  transform: translateY(-8vh);
 }
 
 .drag-title-wrapper {
@@ -333,7 +341,7 @@
 }
 .project-subtitle {
   color: #fbbf24;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 1.4vw;
   margin: 0;
   letter-spacing: 0.025em;
@@ -383,13 +391,11 @@
   max-width: 660px;
   margin-right: 4rem;
   height: 64vh;
-  border-radius: 2.5rem;
   overflow: hidden;
   box-shadow: 0 25px 70px rgba(0,0,0,0.7);
-  background-color: rgba(2, 6, 23, 0.8);
+  background-color: transparent;
   position: relative;
   transition: all 500ms;
-  clip-path: inset(0 round 2.5rem);
 }
 .projects-slideshow-card:hover {
   box-shadow: 0 25px 80px rgba(236,147,63,0.15);
@@ -418,11 +424,10 @@
   position: relative;
   flex-shrink: 0;
   overflow: hidden;
-  background-color: black;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 2.5rem;
 }
 
 .projects-slide-wrapper {
@@ -430,9 +435,7 @@
   height: 100%;
   position: relative;
   transform-origin: center;
-  border-radius: 2.5rem;
   overflow: hidden;
-  clip-path: inset(0 round 2.5rem);
   transition: none;
   will-change: transform;
 }
@@ -480,5 +483,41 @@
   display: block;
   text-align: center;
   line-height: 1;
+}
+
+/* Typewriter Description */
+.projects-typewriter-container {
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 90%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  text-align: left !important;
+}
+
+.projects-description {
+  margin: 0;
+  display: inline;
+  color: #cbd5e1; /* slate-300 */
+  font-weight: 300;
+  font-size: 0.95vw;
+  line-height: 1.625;
+}
+
+@keyframes projects-blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.projects-cursor {
+  display: inline-block;
+  width: 0.6vw;
+  height: 1.3vw;
+  background: #cbd5e1;
+  margin-left: 4px;
+  animation: projects-blink 1s ease infinite;
+  vertical-align: middle;
 }
 

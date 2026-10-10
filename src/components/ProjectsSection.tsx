@@ -15,6 +15,11 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
   const [imageIndex, setImageIndex] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
+  const [typewriterText, setTypewriterText] = useState("");
+  const [typewriterTarget, setTypewriterTarget] = useState(showcaseProjects[0].description);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const typographyRef = useRef<HTMLDivElement>(null);
@@ -44,6 +49,44 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
 
     return () => clearInterval(timer);
   }, [activeProject, isPaused]);
+
+  // Typewriter effect initialization and target updating
+  useEffect(() => {
+    if (typographyProject.description !== typewriterTarget) {
+      if (typewriterText === "") {
+        setTypewriterTarget(typographyProject.description);
+        setIsDeleting(false);
+      } else {
+        setTypewriterTarget(typographyProject.description);
+        setIsDeleting(true);
+      }
+    }
+  }, [typographyProject.description, typewriterTarget, typewriterText]);
+
+  // Typewriter loop
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
+    if (!isVisible) return; // Pause typing if section is out of viewport
+
+    if (isDeleting) {
+      if (typewriterText.length > 0) {
+        timeout = setTimeout(() => {
+          setTypewriterText((prev) => prev.slice(0, -1));
+        }, 10);
+      } else {
+        setIsDeleting(false);
+      }
+    } else {
+      if (typewriterText.length < typewriterTarget.length) {
+        timeout = setTimeout(() => {
+          setTypewriterText(typewriterTarget.substring(0, typewriterText.length + 1));
+        }, 20);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [typewriterText, isDeleting, typewriterTarget, isVisible]);
 
   // Clean up scroll timeout on unmount
   useEffect(() => {
@@ -83,6 +126,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
     if (!containerRef.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
+        setIsVisible(entry.isIntersecting);
         if (onActiveChange) {
           onActiveChange(entry.isIntersecting);
         }
@@ -127,7 +171,6 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       const darkOpacity = progress * 0.75;
 
       wrapper.style.transform = `scale(${scale})`;
-      wrapper.style.borderRadius = "40px";
       overlay.style.opacity = `${darkOpacity}`;
     });
 
@@ -288,36 +331,25 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Left Side: Horizontally & Vertically Centered Typography with Generous Wall Padding */}
-      <div
-        ref={typographyRef}
-        className="projects-typography-side"
-        style={{ opacity: 1, filter: "blur(0px)" }}
-      >
+      <div className="projects-typography-side">
         <div className="projects-typography-content">
-          <div className="drag-title-wrapper">
-            <h1 className="project-title">
-              {typographyProject.title}
-            </h1>
-          </div>
-          <div className="drag-subtitle-wrapper">
-            <p className="project-subtitle">
-              {typographyProject.subtitle}
-            </p>
-          </div>
+          <div
+            ref={typographyRef}
+            className="projects-animatable-typography"
+            style={{ opacity: 1, filter: "blur(0px)" }}
+          >
+            <div className="drag-title-wrapper">
+              <h1 className="project-title">
+                {typographyProject.title}
+              </h1>
+            </div>
+            <div className="drag-subtitle-wrapper">
+              <p className="project-subtitle">
+                {typographyProject.subtitle}
+              </p>
+            </div>
 
-          {/* Tech Stack Chips (Each individually draggable) */}
-          {/* <div className="pt-2 flex flex-wrap items-center">
-            {typographyProject.techStack.map((tech) => (
-              <Draggable key={tech} className="inline-block mr-2 mb-2">
-                <span className="tech-chip shadow-lg backdrop-blur-md bg-slate-900/60 !m-0 block ">
-                  {tech}
-                </span>
-              </Draggable>
-            ))}
-          </div> */}
-
-          {/* Carousel Manual Dots & Image Counter */}
-          {typographyProject.images.length > 1 && (
+            {/* Carousel Manual Dots & Image Counter */}
             <div className="indicators-container">
               <div className="drag-indicator-wrapper">
                 <div className="carousel-indicators">
@@ -332,7 +364,15 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                 </div>
               </div>
             </div>
-          )}
+          </div>
+
+          {/* Typewriter Description (NOT animated by scroll) */}
+          <div className="projects-typewriter-container">
+            <p className="projects-description">
+              {typewriterText}
+              <span className="projects-cursor"></span>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -343,7 +383,6 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
           {/* Slideshow Card with direct right margin spacing */}
           <div
             className="projects-slideshow-card"
-            style={{ WebkitMaskImage: "-webkit-radial-gradient(white, black)" }}
           >
             {/* Vertically Snap-Scrolling Backgrounds */}
             <div
@@ -368,8 +407,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                       }}
                       className="projects-slide-wrapper"
                       style={{
-                        transform: projIndex === 0 ? "scale(1)" : "scale(0.85)",
-                        WebkitMaskImage: "-webkit-radial-gradient(white, black)"
+                        transform: projIndex === 0 ? "scale(1)" : "scale(0.85)"
                       }}
                     >
                       {/* Deep ambient blurred background layer */}
