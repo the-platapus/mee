@@ -530,8 +530,8 @@
   .projects-slideshow-card {
     width: 82% !important;
     max-width: 540px !important;
-    height: 54vh !important;
-    max-height: 480px;
+    height: 100% !important;
+    max-height: 54vh !important;
     margin: 0 auto !important;
   }
 

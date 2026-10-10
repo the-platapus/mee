@@ -24,6 +24,8 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
   const scrollerRef = useRef<HTMLDivElement>(null);
   const typographyRef = useRef<HTMLDivElement>(null);
   const typographyWrapperRef = useRef<HTMLDivElement>(null);
+  const typewriterGhostRef = useRef<HTMLParagraphElement>(null);
+  const typewriterContainerRef = useRef<HTMLDivElement>(null);
   const activeIndexRef = useRef<number>(0);
   const slideWrappersRef = useRef<(HTMLDivElement | null)[]>([]);
   const darkeningOverlaysRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -74,7 +76,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       if (typewriterText.length > 0) {
         timeout = setTimeout(() => {
           setTypewriterText((prev) => prev.slice(0, -1));
-        }, 10);
+        }, 3);
       } else {
         setIsDeleting(false);
       }
@@ -103,6 +105,22 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
     });
 
     resizeObserver.observe(typographyEl);
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  // Smoothly animate the typewriter container's height when the description target changes
+  useEffect(() => {
+    const ghostEl = typewriterGhostRef.current;
+    const containerEl = typewriterContainerRef.current;
+    if (!ghostEl || !containerEl) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        containerEl.style.height = `${entry.target.getBoundingClientRect().height}px`;
+      }
+    });
+
+    resizeObserver.observe(ghostEl);
     return () => resizeObserver.disconnect();
   }, []);
 
@@ -419,8 +437,27 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
           </div>
 
           {/* Typewriter Description (NOT animated by scroll) */}
-          <div className="projects-typewriter-container">
-            <p className="projects-description">
+          <div 
+            ref={typewriterContainerRef}
+            className="projects-typewriter-container"
+            style={{
+              transition: "height 0.85s cubic-bezier(0.16, 1, 0.3, 1)",
+              willChange: "height"
+            }}
+          >
+            {/* Ghost text reserves the exact space needed for the full description */}
+            <p 
+              ref={typewriterGhostRef}
+              className="projects-description" 
+              style={{ visibility: "hidden", pointerEvents: "none", display: "block", margin: 0 }}
+            >
+              {typewriterTarget}
+            </p>
+            {/* Actual typing text overlay */}
+            <p 
+              className="projects-description"
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", display: "block", margin: 0 }}
+            >
               {typewriterText}
               <span className="projects-cursor"></span>
             </p>
