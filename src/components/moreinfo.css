@@ -73,43 +73,51 @@ h3 {
 .sub-caption {
     display: flex;
     flex-direction: column;
-    gap: 3vh;
-    padding: 3.5%;
+    gap: 3rem;
+    padding: 4rem 13%;
     background-color: rgba(0, 0, 0, 0.609);
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 800px) {
     .sub-caption {
         flex-direction: row;
+        gap: 5rem;
     }
 }
 
-.quotes,
+.quotes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 35;
+}
+
 .aim {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    height: 100%;
+    flex: 65;
 }
 
 .quotes h2 {
     font-size: 29px;
     font-weight: 400;
-    line-height: 47px;
+    line-height: 1.4;
     margin: 0;
+    margin-bottom: 1rem;
     color: white;
-    padding-bottom: 0;
+    padding: 0;
 }
 
 .quotes h3 {
     font-size: 15px;
     font-weight: 300;
-    line-height: 30px;
+    line-height: 1.5;
     margin: 0;
     color: white;
-    padding-top: 0;
+    padding: 0;
 }
 
 .aim h2 {
@@ -126,10 +134,10 @@ h3 {
     font-size: 15px;
     text-align: left;
     font-weight: 300;
-    line-height: 27px;
+    line-height: 1.8;
     margin: 0;
     color: white;
-    padding-top: 0;
+    padding: 0;
 }
 
 .about {
