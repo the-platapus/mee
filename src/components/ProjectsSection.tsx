@@ -23,6 +23,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const typographyRef = useRef<HTMLDivElement>(null);
+  const typographyWrapperRef = useRef<HTMLDivElement>(null);
   const activeIndexRef = useRef<number>(0);
   const slideWrappersRef = useRef<(HTMLDivElement | null)[]>([]);
   const darkeningOverlaysRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -87,6 +88,23 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
 
     return () => clearTimeout(timeout);
   }, [typewriterText, isDeleting, typewriterTarget, isVisible]);
+
+  // Smoothly animate the typography container's height when titles/subtitles wrap to multiple lines
+  useEffect(() => {
+    const typographyEl = typographyRef.current;
+    const wrapperEl = typographyWrapperRef.current;
+    if (!typographyEl || !wrapperEl) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        // Read the actual content height and smoothly apply it to the wrapper
+        wrapperEl.style.height = `${entry.target.getBoundingClientRect().height}px`;
+      }
+    });
+
+    resizeObserver.observe(typographyEl);
+    return () => resizeObserver.disconnect();
+  }, []);
 
   // Clean up scroll timeout on unmount
   useEffect(() => {
@@ -360,11 +378,18 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       <div className="projects-typography-side">
         <div className="projects-typography-content">
           <div
-            ref={typographyRef}
-            className="projects-animatable-typography"
-            style={{ opacity: 1, filter: "blur(0px)" }}
+            ref={typographyWrapperRef}
+            style={{
+              transition: "height 0.85s cubic-bezier(0.16, 1, 0.3, 1)",
+              willChange: "height",
+            }}
           >
-            <div className="drag-title-wrapper">
+            <div
+              ref={typographyRef}
+              className="projects-animatable-typography"
+              style={{ opacity: 1, filter: "blur(0px)" }}
+            >
+              <div className="drag-title-wrapper">
               <h1 className="project-title">
                 {typographyProject.title}
               </h1>
@@ -390,6 +415,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                 </div>
               </div>
             </div>
+          </div>
           </div>
 
           {/* Typewriter Description (NOT animated by scroll) */}
