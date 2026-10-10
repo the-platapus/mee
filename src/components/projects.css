@@ -491,12 +491,12 @@
   }
 
   .project-title {
-    font-size: clamp(1.85rem, 6.5vw, 2.75rem) !important;
+    font-size: clamp(1.25rem, 7vw, 2.75rem) !important;
     margin-bottom: 0.25rem !important;
   }
 
   .project-subtitle {
-    font-size: clamp(0.95rem, 3.5vw, 1.25rem) !important;
+    font-size: clamp(0.8rem, 4vw, 1.25rem) !important;
   }
 
   .projects-typewriter-container {
@@ -507,7 +507,7 @@
   }
 
   .projects-description {
-    font-size: clamp(0.85rem, 3vw, 1.1rem) !important;
+    font-size: clamp(0.75rem, 3.5vw, 1.1rem) !important;
   }
 
   .projects-cursor {
