@@ -82,12 +82,7 @@ function Draggable({ children, className = "", resetOnDoubleClick = true }: Drag
         transition: isDragging ? "none" : "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         willChange: "transform",
       }}
-      className={`relative select-none touch-none ${className} ${isDragging
-        ? "drop-shadow-[0_20px_30px_rgba(236,147,63,0.4)] brightness-110 filter"
-        : isHovered
-          ? "drop-shadow-[0_8px_16px_rgba(255,255,255,0.15)]"
-          : ""
-        } transition-[filter,drop-shadow] duration-200`}
+      className={`draggable-wrapper ${className} ${isDragging ? "is-dragging" : isHovered ? "is-hovered" : ""}`}
     >
       {children}
     </div>
@@ -372,24 +367,24 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
     <div
       ref={containerRef}
       id="projects"
-      className="projects-viewport-lock select-none bg-transparent snap-start relative flex flex-row items-center justify-between overflow-hidden w-full h-screen min-h-screen max-h-screen overscroll-none"
+      className="projects-viewport-lock"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Left Side: Horizontally & Vertically Centered Typography with Generous Wall Padding */}
       <div
         ref={typographyRef}
-        className="projects-typography-side w-1/2 h-full z-20 flex flex-col justify-center items-start text-left px-8 sm:px-12 md:px-16 lg:px-24 will-change-[opacity,filter]"
+        className="projects-typography-side"
         style={{ opacity: 1, filter: "blur(0px)" }}
       >
-        <div className="projects-typography-content pointer-events-auto w-full max-w-[42vw] text-left">
-          <Draggable className="block w-fit mb-2">
-            <h1 className="project-title text-[3.8vw] font-extrabold tracking-tight text-white m-0 font-lexend leading-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+        <div className="projects-typography-content">
+          <Draggable className="drag-title-wrapper">
+            <h1 className="project-title">
               {typographyProject.title}
             </h1>
           </Draggable>
-          <Draggable className="block w-fit mb-4">
-            <p className="project-subtitle text-amber-400 font-semibold text-[1.4vw] m-0 tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+          <Draggable className="drag-subtitle-wrapper">
+            <p className="project-subtitle">
               {typographyProject.subtitle}
             </p>
           </Draggable>
@@ -407,9 +402,9 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
 
           {/* Carousel Manual Dots & Image Counter */}
           {typographyProject.images.length > 1 && (
-            <div className="pt-4 flex items-center gap-4">
-              <Draggable className="inline-block">
-                <div className="carousel-indicators px-3.5 py-2 rounded-full bg-slate-900/60 backdrop-blur-md shadow-lg">
+            <div className="indicators-container">
+              <Draggable className="drag-indicator-wrapper">
+                <div className="carousel-indicators">
                   {typographyProject.images.map((_, idx) => (
                     <button
                       key={idx}
@@ -426,19 +421,19 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       </div>
 
       {/* Right Side: Pure Block Relative Wrapper ensuring standard CSS absolute positioning against Far Right Wall */}
-      <div className="projects-slideshow-side m-25 w-1/2 h-full relative z-10 block p-0">
+      <div className="projects-slideshow-side">
         {/* Inner Flex Container exclusively dedicated to centering the Slideshow Card */}
-        <div className="w-full h-full flex items-center justify-center">
+        <div className="projects-slideshow-inner">
           {/* Slideshow Card with direct right margin spacing */}
           <div
-            className="projects-slideshow-card w-[95%] max-w-[660px] mr-16 sm:mr-20 md:mr-24 h-[64vh] sm:h-[68vh] rounded-[2.5rem] overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.7)] bg-slate-950/80 relative group transition-all duration-500 hover:shadow-[0_25px_80px_rgba(236,147,63,0.15)] [clip-path:inset(0_round_2.5rem)]"
+            className="projects-slideshow-card"
             style={{ WebkitMaskImage: "-webkit-radial-gradient(white, black)" }}
           >
             {/* Vertically Snap-Scrolling Backgrounds */}
             <div
               ref={scrollerRef}
               onScroll={updateScrollAnimations}
-              className="w-full h-full overflow-y-auto snap-y snap-mandatory no-scrollbar relative z-10 overscroll-contain"
+              className="projects-scroller no-scrollbar"
               style={{ scrollBehavior: "smooth" }}
             >
               {showcaseProjects.map((proj, projIndex) => {
@@ -448,14 +443,14 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                 return (
                   <div
                     key={proj.id}
-                    className="w-full h-full snap-start relative flex-shrink-0 overflow-hidden bg-black flex items-center justify-center rounded-[2.5rem]"
+                    className="projects-scroller-item"
                   >
                     {/* Animated inner picture wrapper that zooms out & zooms in */}
                     <div
                       ref={(el) => {
                         slideWrappersRef.current[projIndex] = el;
                       }}
-                      className="w-full h-full relative origin-center rounded-[2.5rem] overflow-hidden [clip-path:inset(0_round_2.5rem)] transition-none will-change-transform"
+                      className="projects-slide-wrapper"
                       style={{
                         transform: projIndex === 0 ? "scale(1)" : "scale(0.85)",
                         WebkitMaskImage: "-webkit-radial-gradient(white, black)"
@@ -483,7 +478,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                         ref={(el) => {
                           darkeningOverlaysRef.current[projIndex] = el;
                         }}
-                        className="absolute inset-0 bg-black z-10 pointer-events-none transition-none will-change-opacity"
+                        className="projects-dark-overlay"
                         style={{
                           opacity: projIndex === 0 ? 0 : 0.75,
                         }}
@@ -502,8 +497,8 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
         className="projects-vertical-nav pointer-events-none"
         style={{ position: "absolute", right: "1.5rem", left: "auto", top: "50%", transform: "translateY(-50%)", zIndex: 9999 }}
       >
-        <Draggable className="inline-block pointer-events-auto">
-          <div className="flex flex-col items-center bg-slate-950/80 backdrop-blur-md py-6 px-3 sm:px-3.5 rounded-full">
+        <Draggable className="drag-nav-wrapper">
+          <div className="projects-vertical-nav-container">
             {showcaseProjects.map((proj, idx) => {
               const isCurrent = idx === activeIndex;
               return (
@@ -515,9 +510,9 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                 />
               );
             })}
-            <div className="section-vertical-label flex flex-col items-center mt-2 gap-1 text-[1.5vw] text-amber-400 font-extrabold select-none uppercase">
+            <div className="section-vertical-label">
               {activeProject.section.split("").map((char, index) => (
-                <span key={index} className="block text-center leading-none">
+                <span key={index} className="section-vertical-char">
                   {char === " " ? "\u00A0" : char}
                 </span>
               ))}
