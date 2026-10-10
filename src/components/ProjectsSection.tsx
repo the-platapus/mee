@@ -5,90 +5,6 @@ import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { showcaseProjects, Project } from "@/data/projects";
 import "./projects.css";
 
-interface DraggableProps {
-  children: React.ReactNode;
-  className?: string;
-  resetOnDoubleClick?: boolean;
-}
-
-function Draggable({ children, className = "", resetOnDoubleClick = true }: DraggableProps) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const dragRef = useRef({ startX: 0, startY: 0, origX: 0, origY: 0, moved: false });
-
-  const handlePointerDown = (e: React.PointerEvent) => {
-    if (e.button !== 0 && e.pointerType === "mouse") return;
-    e.stopPropagation();
-    dragRef.current = {
-      startX: e.clientX,
-      startY: e.clientY,
-      origX: position.x,
-      origY: position.y,
-      moved: false,
-    };
-    try {
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    } catch { }
-  };
-
-  const handlePointerMove = (e: React.PointerEvent) => {
-    if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
-    const dx = e.clientX - dragRef.current.startX;
-    const dy = e.clientY - dragRef.current.startY;
-
-    if (Math.hypot(dx, dy) > 4 && !dragRef.current.moved) {
-      dragRef.current.moved = true;
-      setIsDragging(true);
-    }
-
-    if (dragRef.current.moved) {
-      setPosition({
-        x: dragRef.current.origX + dx,
-        y: dragRef.current.origY + dy,
-      });
-    }
-  };
-
-  const handlePointerUp = (e: React.PointerEvent) => {
-    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-      try {
-        (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-      } catch { }
-    }
-    setIsDragging(false);
-  };
-
-  return (
-    <div
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onDoubleClick={() => resetOnDoubleClick && setPosition({ x: 0, y: 0 })}
-      onClickCapture={(e) => {
-        if (dragRef.current.moved) {
-          e.stopPropagation();
-          e.preventDefault();
-        }
-      }}
-      title={resetOnDoubleClick ? "Drag to move • Double-click to reset position" : "Drag to move"}
-      style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0) ${isDragging ? "scale(1.03)" : "scale(1)"}`,
-        cursor: isDragging ? "grabbing" : "grab",
-        zIndex: isDragging ? 9999 : position.x !== 0 || position.y !== 0 ? 100 : "auto",
-        transition: isDragging ? "none" : "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-        willChange: "transform",
-      }}
-      className={`draggable-wrapper ${className} ${isDragging ? "is-dragging" : isHovered ? "is-hovered" : ""}`}
-    >
-      {children}
-    </div>
-  );
-}
-
 interface ProjectsSectionProps {
   onActiveChange?: (active: boolean) => void;
 }
@@ -378,16 +294,16 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
         style={{ opacity: 1, filter: "blur(0px)" }}
       >
         <div className="projects-typography-content">
-          <Draggable className="drag-title-wrapper">
+          <div className="drag-title-wrapper">
             <h1 className="project-title">
               {typographyProject.title}
             </h1>
-          </Draggable>
-          <Draggable className="drag-subtitle-wrapper">
+          </div>
+          <div className="drag-subtitle-wrapper">
             <p className="project-subtitle">
               {typographyProject.subtitle}
             </p>
-          </Draggable>
+          </div>
 
           {/* Tech Stack Chips (Each individually draggable) */}
           {/* <div className="pt-2 flex flex-wrap items-center">
@@ -403,7 +319,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
           {/* Carousel Manual Dots & Image Counter */}
           {typographyProject.images.length > 1 && (
             <div className="indicators-container">
-              <Draggable className="drag-indicator-wrapper">
+              <div className="drag-indicator-wrapper">
                 <div className="carousel-indicators">
                   {typographyProject.images.map((_, idx) => (
                     <button
@@ -414,7 +330,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
                     />
                   ))}
                 </div>
-              </Draggable>
+              </div>
             </div>
           )}
         </div>
@@ -497,7 +413,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
         className="projects-vertical-nav pointer-events-none"
         style={{ position: "absolute", right: "1.5rem", left: "auto", top: "50%", transform: "translateY(-50%)", zIndex: 9999 }}
       >
-        <Draggable className="drag-nav-wrapper">
+        <div className="drag-nav-wrapper">
           <div className="projects-vertical-nav-container">
             {showcaseProjects.map((proj, idx) => {
               const isCurrent = idx === activeIndex;
@@ -518,7 +434,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
               ))}
             </div>
           </div>
-        </Draggable>
+        </div>
       </div>
     </div>
   );
