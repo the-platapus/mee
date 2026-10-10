@@ -131,3 +131,8 @@ h3 {
 .fa-circle-arrow-right {
     animation: pulse 2s infinite ease-in-out;
 }
+.home-container {
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+}

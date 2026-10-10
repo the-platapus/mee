@@ -44,16 +44,54 @@ export default function Home() {
     const smolImg = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnitsmol.webp";
     const fullImg = "https://raw.githubusercontent.com/the-platapus/mee/refs/heads/main/public/assets/images/plsloadgoddamnit.png";
 
-    const img = new Image();
-    img.src = smolImg;
-    img.onload = () => {
-      setBgSrc(smolImg);
+    let isMounted = true;
+    let smolAttempts = 0;
+    const MAX_ATTEMPTS = 3;
 
+    const loadHighRes = () => {
+      if (!isMounted) return;
       const highResImg = new Image();
       highResImg.src = fullImg;
       highResImg.onload = () => {
+        if (!isMounted) return;
         setBgSrc(fullImg);
       };
+      highResImg.onerror = () => {
+        console.error("Failed to load high-res background image.");
+      };
+    };
+
+    const loadSmol = () => {
+      if (!isMounted) return;
+      const img = new Image();
+      img.src = smolImg;
+      
+      img.onload = () => {
+        if (!isMounted) return;
+        setBgSrc(smolImg);
+        // After small image loads successfully, initiate high-res download
+        loadHighRes();
+      };
+      
+      img.onerror = () => {
+        if (!isMounted) return;
+        smolAttempts++;
+        if (smolAttempts < MAX_ATTEMPTS) {
+          console.warn(`Failed to load low-res background image (attempt ${smolAttempts}). Retrying...`);
+          // Small delay before retry to prevent immediate rapid-fire requests
+          setTimeout(loadSmol, 1000);
+        } else {
+          console.error("Failed to load low-res background image after 3 attempts. Attempting high-res fallback.");
+          loadHighRes();
+        }
+      };
+    };
+
+    // Kick off the loading sequence starting with the low-res image
+    loadSmol();
+
+    return () => {
+      isMounted = false;
     };
   }, []);
 
@@ -89,7 +127,7 @@ export default function Home() {
     <>
       <div
         id="bg-container"
-        className="fixed top-0 left-0 w-full h-full pointer-events-none"
+        className="bg-container"
         style={{
           zIndex: -1,
           filter: `blur(${blurAmount}px)`,
@@ -99,7 +137,7 @@ export default function Home() {
       >
         <div
           id="bg-layer"
-          className="w-full h-full bg-cover bg-center bg-no-repeat animate-fadeIn"
+          className="bg-layer animate-fadeIn"
           style={{
             backgroundImage: bgSrc ? `url("${bgSrc}")` : "none",
             backgroundColor: "#2b3a4f",
@@ -117,7 +155,7 @@ export default function Home() {
 
       {/* Standalone Cinematic Radial-Gradient Vignette applied over website background when in Projects Section */}
       <div
-        className="fixed inset-0 w-full h-full pointer-events-none transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1)"
+        className="projects-vignette"
         style={{
           background: "radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 90%)",
           opacity: isProjectsActive ? 1 : 0,
@@ -128,7 +166,7 @@ export default function Home() {
 
       <div
         ref={scrollContainerRef}
-        className="relative z-10 w-full h-screen overflow-y-auto snap-y snap-mandatory no-scrollbar animate-fadeIn"
+        className="main-scroll-container no-scrollbar animate-fadeIn"
       >
         {isSplashLoaded ? (
           <>

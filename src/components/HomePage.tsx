@@ -52,7 +52,7 @@ export default function HomePage({ onUnlockScroll }: HomePageProps) {
   }, [charIndex, isDeleting, skillIndex]);
 
   return (
-    <div className="h-screen w-full snap-start">
+    <div className="home-container">
       <h1 className={`${zoomOut ? "animate-zoomOut" : ""}`} style={{ paddingTop: "50vb" }}>Abdullah Aamir</h1>
       <div className="header-icons">
         <a
