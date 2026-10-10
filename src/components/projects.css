@@ -213,6 +213,7 @@
   .projects-typography-content {
     max-width: 92% !important;
     padding: 1rem 1.5rem 0.5rem !important;
+    transform: none !important;
   }
 
   .project-title {
@@ -222,6 +223,22 @@
 
   .project-subtitle {
     font-size: clamp(0.95rem, 3.5vw, 1.25rem) !important;
+  }
+
+  .projects-typewriter-container {
+    position: relative !important;
+    top: auto !important;
+    min-height: 6rem;
+    margin-top: 1rem !important;
+  }
+
+  .projects-description {
+    font-size: clamp(0.85rem, 3vw, 1.1rem) !important;
+  }
+
+  .projects-cursor {
+    width: 0.5rem !important;
+    height: 1.1rem !important;
   }
 
   .projects-slideshow-side {

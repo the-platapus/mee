@@ -106,7 +106,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       targetIndexRef.current = null;
     }, 850);
 
-    if (typographyRef.current) {
+    if (typographyRef.current && activeIndexRef.current !== index) {
       typographyRef.current.style.transition = "opacity 0.2s ease-out 0s, filter 0.2s ease-out 0s";
       typographyRef.current.style.opacity = "0";
       typographyRef.current.style.filter = "blur(18px)";
@@ -243,6 +243,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
 
     let touchStartY = 0;
     let touchStartX = 0;
+    let initialTouchY = 0;
     let resetTimer: NodeJS.Timeout | null = null;
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -253,6 +254,7 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       if (e.touches.length !== 1) return;
       touchStartY = e.touches[0].clientY;
       touchStartX = e.touches[0].clientX;
+      initialTouchY = touchStartY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -310,15 +312,39 @@ export default function ProjectsSection({ onActiveChange }: ProjectsSectionProps
       }
     };
 
+    const handleTouchEnd = (e: TouchEvent) => {
+      const scroller = scrollerRef.current;
+      if (!scroller || e.changedTouches.length !== 1) return;
+      if (scroller.contains(e.target as Node)) return;
+
+      const touchEndY = e.changedTouches[0].clientY;
+      const totalDeltaY = initialTouchY - touchEndY;
+
+      let targetIndex = activeIndexRef.current;
+
+      if (totalDeltaY > 50) {
+        // Swiped up -> next project
+        targetIndex++;
+      } else if (totalDeltaY < -50) {
+        // Swiped down -> prev project
+        targetIndex--;
+      }
+
+      targetIndex = Math.max(0, Math.min(showcaseProjects.length - 1, targetIndex));
+      scrollToProject(targetIndex);
+    };
+
     container.addEventListener("wheel", handleWheel, { passive: false });
     container.addEventListener("touchstart", handleTouchStart, { passive: true });
     container.addEventListener("touchmove", handleTouchMove, { passive: false });
+    container.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       if (resetTimer) clearTimeout(resetTimer);
       container.removeEventListener("wheel", handleWheel);
       container.removeEventListener("touchstart", handleTouchStart);
       container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleTouchEnd);
     };
   }, []);
 
