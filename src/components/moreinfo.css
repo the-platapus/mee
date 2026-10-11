@@ -188,3 +188,23 @@ h3 {
         font-size: 2.25rem;
     }
 }
+
+@keyframes macosFlash {
+    0%, 100% {
+        filter: brightness(0.75);
+    }
+    50% {
+        filter: brightness(1.9);
+    }
+}
+
+.macos-flash {
+    animation: macosFlash 0.35s ease-in-out infinite !important;
+    pointer-events: none !important;
+    cursor: default !important;
+}
+
+.macos-flash i,
+.macos-flash .fa-circle-arrow-right {
+    animation: none !important;
+}

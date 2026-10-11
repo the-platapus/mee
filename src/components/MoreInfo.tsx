@@ -54,8 +54,7 @@ export default function MoreInfo({ onUnlockProjects, isLoading }: MoreInfoProps 
                   background: "none",
                   border: "none",
                   padding: 0,
-                  cursor: isLoading ? "default" : "pointer",
-                  transition: "opacity 0.2s ease"
+                  cursor: isLoading ? "default" : "pointer"
                 }}
                 title="View Projects"
                 className={`about-btn ${isLoading ? "macos-flash" : ""}`}

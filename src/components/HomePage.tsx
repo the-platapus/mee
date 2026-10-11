@@ -90,8 +90,7 @@ export default function HomePage({ onUnlockScroll, isLoading }: HomePageProps) {
             background: "none",
             border: "none",
             padding: 0,
-            cursor: isLoading ? "default" : "pointer",
-            transition: "opacity 0.2s ease"
+            cursor: isLoading ? "default" : "pointer"
           }}
           className={isLoading ? "macos-flash" : ""}
         >

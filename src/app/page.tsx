@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import HomePage from "@/components/HomePage";
@@ -26,22 +26,25 @@ export default function Home() {
 
   const scrollToElement = (id: string, onStopLoading: () => void) => {
     const startTime = Date.now();
+    const MIN_FLASH_DURATION = 650; // Ensure 2 full high-contrast flashes are seen
+
     let attempts = 0;
     const interval = setInterval(() => {
       const el = document.getElementById(id);
       if (el) {
         clearInterval(interval);
-        el.scrollIntoView({ behavior: "smooth" });
 
         const elapsed = Date.now() - startTime;
-        const cycleDuration = 600;
-        const cycles = Math.max(1, Math.ceil(elapsed / cycleDuration));
-        const targetTime = cycles * cycleDuration;
-        const remaining = Math.max(0, targetTime - elapsed);
+        const delayBeforeScroll = Math.max(0, MIN_FLASH_DURATION - elapsed);
 
         setTimeout(() => {
-          onStopLoading();
-        }, remaining);
+          el.scrollIntoView({ behavior: "smooth" });
+          // Stop loading once smooth scroll has commenced
+          setTimeout(() => {
+            onStopLoading();
+          }, 300);
+        }, delayBeforeScroll);
+
         return;
       }
       attempts++;
@@ -55,15 +58,21 @@ export default function Home() {
   const handleNextClick = () => {
     if (isNextLoading) return;
     setIsNextLoading(true);
-    setIsLoaded(true);
-    scrollToElement("more-info", () => setIsNextLoading(false));
+    // Ensure the flashing state paints to screen immediately before the network fetch begins
+    setTimeout(() => {
+      setIsLoaded(true);
+      scrollToElement("more-info", () => setIsNextLoading(false));
+    }, 40);
   };
 
   const handleProjectsClick = () => {
     if (isProjectsLoading) return;
     setIsProjectsLoading(true);
-    setIsProjectsLoaded(true);
-    scrollToElement("projects", () => setIsProjectsLoading(false));
+    // Ensure the flashing state paints to screen immediately before the network fetch begins
+    setTimeout(() => {
+      setIsProjectsLoaded(true);
+      scrollToElement("projects", () => setIsProjectsLoading(false));
+    }, 40);
   };
 
   useEffect(() => {
@@ -241,12 +250,14 @@ export default function Home() {
           </>
         ) : null}
         {isLoaded ? (
-          <>
+          <Suspense fallback={null}>
             <MoreInfo onUnlockProjects={handleProjectsClick} isLoading={isProjectsLoading} />
             {isProjectsLoaded && (
-              <ProjectsSection onActiveChange={setIsProjectsActive} />
+              <Suspense fallback={null}>
+                <ProjectsSection onActiveChange={setIsProjectsActive} />
+              </Suspense>
             )}
-          </>
+          </Suspense>
         ) : null}
       </div>
 

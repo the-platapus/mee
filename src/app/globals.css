@@ -5,10 +5,13 @@
 html {
   background-color: #2b3a4f;
 }
-html, body {
+
+html,
+body {
   min-height: 100dvh;
   width: 100%;
-  overflow-y: auto;   /* allow scroll */
+  overflow-y: auto;
+  /* allow scroll */
   overflow-x: hidden;
   background: transparent;
   margin: 0;
@@ -16,14 +19,18 @@ html, body {
   line-height: 0.95;
   font-family: var(--font-dancing-script), "Brush Script MT", "Comic Sans MS", cursive;
   user-select: none;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
 body::-webkit-scrollbar {
   display: none;
 }
+
 body {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .animate-fadeIn {
@@ -45,6 +52,7 @@ body {
   0% {
     filter: brightness(0%) contrast(300%);
   }
+
   100% {
     filter: brightness(100%) contrast(100%);
   }
@@ -66,6 +74,7 @@ i.icon.fa-solid.fa-circle-arrow-right.colo {
   color: #ec933f;
   text-align: center;
 }
+
 i.icon.fa-brands.fa-github {
   font-size: 30px;
   margin-top: 2vb;
@@ -74,6 +83,7 @@ i.icon.fa-brands.fa-github {
   color: #ec933f;
   text-align: center;
 }
+
 i.icon.fa-solid.fa-envelope {
   font-size: 30px;
   margin-top: 2vb;
@@ -87,13 +97,16 @@ html {
   line-height: 0.7;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
   scroll-behavior: smooth;
 }
 
 html::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
+  display: none;
+  /* Chrome, Safari, and Opera */
 }
 
 @keyframes funnyFadeIn {
@@ -101,6 +114,7 @@ html::-webkit-scrollbar {
     backdrop-filter: contrast(170%) brightness(0%);
     filter: brightness(0%) blur(17px);
   }
+
   100% {
     backdrop-filter: contrast(100%) brightness(100%);
     filter: brightness(100%) blur(0px);
@@ -111,6 +125,7 @@ html::-webkit-scrollbar {
   0% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
@@ -120,11 +135,8 @@ html::-webkit-scrollbar {
   animation: zoomOut 1s ease forwards;
 }
 
-@media only screen and (min-width: 550px)
-  {
-    
-  }
-  
+@media only screen and (min-width: 550px) {}
+
 @keyframes lights {
   0% {
     color: hsl(230, 40%, 80%);
@@ -182,6 +194,7 @@ html::-webkit-scrollbar {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -189,16 +202,37 @@ html::-webkit-scrollbar {
 
 /* Hard-Scroll Wormhole Portal Animations */
 @keyframes rotateClockwise {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
 @keyframes rotateCounterClockwise {
-  0% { transform: rotate(360deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
 }
+
 @keyframes pulseWormhole {
-  0%, 100% { transform: scale(1); filter: brightness(1.1) drop-shadow(0 0 45px rgba(236, 147, 63, 0.8)); }
-  50% { transform: scale(1.05); filter: brightness(1.5) drop-shadow(0 0 70px rgba(168, 85, 247, 0.95)); }
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1.1) drop-shadow(0 0 45px rgba(236, 147, 63, 0.8));
+  }
+
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.5) drop-shadow(0 0 70px rgba(168, 85, 247, 0.95));
+  }
 }
 
 .wormhole-ring-outer {
@@ -268,16 +302,24 @@ html::-webkit-scrollbar {
 }
 
 @keyframes macosFlash {
-  0%, 100% {
-    opacity: 1;
+
+  0%,
+  100% {
+    filter: brightness(0.75);
   }
+
   50% {
-    opacity: 0.2;
+    filter: brightness(1.9);
   }
 }
 
 .macos-flash {
-  animation: macosFlash 0.6s ease-in-out infinite !important;
+  animation: macosFlash 0.3s ease-in-out infinite !important;
+  pointer-events: none !important;
   cursor: default !important;
 }
 
+.macos-flash i,
+.macos-flash .fa-circle-arrow-right {
+  animation: none !important;
+}
