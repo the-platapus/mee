@@ -48,10 +48,17 @@ export default function MoreInfo({ onUnlockProjects, isLoading }: MoreInfoProps 
             {onUnlockProjects && (
               <button
                 aria-label="Unlock Projects Section"
-                onClick={onUnlockProjects}
-                style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+                onClick={isLoading ? undefined : onUnlockProjects}
+                disabled={isLoading}
+                style={{
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  cursor: isLoading ? "default" : "pointer",
+                  transition: "opacity 0.2s ease"
+                }}
                 title="View Projects"
-                className={`about-btn ${isLoading ? "animate-pulse opacity-50" : ""}`}
+                className={`about-btn ${isLoading ? "macos-flash" : ""}`}
               >
                 <i className="cursor-pointer icon fa-solid fa-circle-arrow-right about-icon" aria-hidden="true"></i>
               </button>

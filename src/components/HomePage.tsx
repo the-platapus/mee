@@ -84,9 +84,16 @@ export default function HomePage({ onUnlockScroll, isLoading }: HomePageProps) {
         </a>
         <button
           aria-label="Next Page"
-          onClick={onUnlockScroll}
-          style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
-          className={isLoading ? "animate-pulse opacity-50" : ""}
+          onClick={isLoading ? undefined : onUnlockScroll}
+          disabled={isLoading}
+          style={{
+            background: "none",
+            border: "none",
+            padding: 0,
+            cursor: isLoading ? "default" : "pointer",
+            transition: "opacity 0.2s ease"
+          }}
+          className={isLoading ? "macos-flash" : ""}
         >
           <i className="cursor-pointer icon fa-solid fa-circle-arrow-right colo"></i>
         </button>

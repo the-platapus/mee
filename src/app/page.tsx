@@ -25,29 +25,42 @@ export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToElement = (id: string, onStopLoading: () => void) => {
+    const startTime = Date.now();
     let attempts = 0;
     const interval = setInterval(() => {
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-        onStopLoading();
         clearInterval(interval);
+        el.scrollIntoView({ behavior: "smooth" });
+
+        const elapsed = Date.now() - startTime;
+        const cycleDuration = 600;
+        const cycles = Math.max(1, Math.ceil(elapsed / cycleDuration));
+        const targetTime = cycles * cycleDuration;
+        const remaining = Math.max(0, targetTime - elapsed);
+
+        setTimeout(() => {
+          onStopLoading();
+        }, remaining);
+        return;
       }
       attempts++;
       if (attempts > 50) {
-        onStopLoading(); // Give up after 5 seconds to reset button
         clearInterval(interval);
+        onStopLoading(); // Give up after 5 seconds to reset button
       }
     }, 100);
   };
 
   const handleNextClick = () => {
+    if (isNextLoading) return;
     setIsNextLoading(true);
     setIsLoaded(true);
     scrollToElement("more-info", () => setIsNextLoading(false));
   };
 
   const handleProjectsClick = () => {
+    if (isProjectsLoading) return;
     setIsProjectsLoading(true);
     setIsProjectsLoaded(true);
     scrollToElement("projects", () => setIsProjectsLoading(false));
