@@ -12,34 +12,45 @@ import "./fireflies.css";
 
 export default function Home() {
   const [isBgLoaded, setIsBgLoaded] = useState(false);
+  const [isSplashLoaded, setIsSplashLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [bgSrc, setBgSrc] = useState("");
   const [blurAmount, setBlurAmount] = useState(0);
   const [isProjectsActive, setIsProjectsActive] = useState(false);
   const [isProjectsLoaded, setIsProjectsLoaded] = useState(false);
 
+  const [isNextLoading, setIsNextLoading] = useState(false);
+  const [isProjectsLoading, setIsProjectsLoading] = useState(false);
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleNextClick = () => {
-    setIsLoaded(true);
-    // Wait for MoreInfo to render, then scroll to it
-    setTimeout(() => {
-      const el = document.getElementById("more-info");
+  const scrollToElement = (id: string, onStopLoading: () => void) => {
+    let attempts = 0;
+    const interval = setInterval(() => {
+      const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: "smooth" });
+        onStopLoading();
+        clearInterval(interval);
       }
-    }, 50);
+      attempts++;
+      if (attempts > 50) {
+        onStopLoading(); // Give up after 5 seconds to reset button
+        clearInterval(interval);
+      }
+    }, 100);
+  };
+
+  const handleNextClick = () => {
+    setIsNextLoading(true);
+    setIsLoaded(true);
+    scrollToElement("more-info", () => setIsNextLoading(false));
   };
 
   const handleProjectsClick = () => {
+    setIsProjectsLoading(true);
     setIsProjectsLoaded(true);
-    // Wait for ProjectsSection to render, then scroll to it
-    setTimeout(() => {
-      const el = document.getElementById("projects");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 50);
+    scrollToElement("projects", () => setIsProjectsLoading(false));
   };
 
   useEffect(() => {
@@ -127,8 +138,47 @@ export default function Home() {
     };
   }, []);
 
+  // Delay the HomePage mounting to preserve the cinematic title entry animation.
+  // We wait 2 seconds so the 3-second background fade-in is bright enough to see it.
+  useEffect(() => {
+    if (isBgLoaded) {
+      const timer = setTimeout(() => {
+        setIsSplashLoaded(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isBgLoaded]);
+
   return (
     <>
+      {/* Minimal Loader */}
+      {!isBgLoaded && (
+        <div style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 100,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          pointerEvents: "none",
+        }}>
+          <style>{`
+            @keyframes minimalSpin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+          <div style={{
+            width: "40px",
+            height: "40px",
+            border: "3px solid rgba(245, 158, 11, 0.3)",
+            borderTopColor: "#fbbf24",
+            borderRadius: "50%",
+            animation: "minimalSpin 1s linear infinite"
+          }} />
+        </div>
+      )}
+
       <div
         id="bg-container"
         className="bg-container"
@@ -141,7 +191,7 @@ export default function Home() {
       >
         <div
           id="bg-layer"
-          className="bg-layer animate-fadeIn"
+          className={`bg-layer ${isBgLoaded ? "animate-fadeIn" : "brightness-0"}`}
           style={{
             backgroundImage: bgSrc ? `url("${bgSrc}")` : "none",
             backgroundColor: "#2b3a4f",
@@ -170,16 +220,16 @@ export default function Home() {
 
       <div
         ref={scrollContainerRef}
-        className="main-scroll-container no-scrollbar animate-fadeIn"
+        className={`main-scroll-container no-scrollbar ${isBgLoaded ? "animate-fadeIn" : "opacity-0"}`}
       >
-        {isBgLoaded ? (
+        {isSplashLoaded ? (
           <>
-            <HomePage onUnlockScroll={handleNextClick} />
+            <HomePage onUnlockScroll={handleNextClick} isLoading={isNextLoading} />
           </>
         ) : null}
         {isLoaded ? (
           <>
-            <MoreInfo onUnlockProjects={handleProjectsClick} />
+            <MoreInfo onUnlockProjects={handleProjectsClick} isLoading={isProjectsLoading} />
             {isProjectsLoaded && (
               <ProjectsSection onActiveChange={setIsProjectsActive} />
             )}

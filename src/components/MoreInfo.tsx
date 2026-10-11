@@ -4,9 +4,10 @@ import "./moreinfo.css";
 
 interface MoreInfoProps {
   onUnlockProjects?: () => void;
+  isLoading?: boolean;
 }
 
-export default function MoreInfo({ onUnlockProjects }: MoreInfoProps = {}) {
+export default function MoreInfo({ onUnlockProjects, isLoading }: MoreInfoProps = {}) {
   return (
     <div id="more-info" className="more-info-container">
       <div className="main-caption">
@@ -50,7 +51,7 @@ export default function MoreInfo({ onUnlockProjects }: MoreInfoProps = {}) {
                 onClick={onUnlockProjects}
                 style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
                 title="View Projects"
-                className="about-btn"
+                className={`about-btn ${isLoading ? "animate-pulse opacity-50" : ""}`}
               >
                 <i className="cursor-pointer icon fa-solid fa-circle-arrow-right about-icon" aria-hidden="true"></i>
               </button>

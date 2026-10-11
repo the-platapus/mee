@@ -13,9 +13,10 @@ const skills = [
 
 export interface HomePageProps {
   onUnlockScroll?: () => void;
+  isLoading?: boolean;
 }
 
-export default function HomePage({ onUnlockScroll }: HomePageProps) {
+export default function HomePage({ onUnlockScroll, isLoading }: HomePageProps) {
   const [skillIndex, setSkillIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
@@ -85,6 +86,7 @@ export default function HomePage({ onUnlockScroll }: HomePageProps) {
           aria-label="Next Page"
           onClick={onUnlockScroll}
           style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+          className={isLoading ? "animate-pulse opacity-50" : ""}
         >
           <i className="cursor-pointer icon fa-solid fa-circle-arrow-right colo"></i>
         </button>
