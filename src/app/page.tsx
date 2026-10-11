@@ -2,14 +2,16 @@
 
 import { useEffect, useState, useRef } from "react";
 import Script from "next/script";
-import MoreInfo from "@/components/MoreInfo";
+import dynamic from "next/dynamic";
 import HomePage from "@/components/HomePage";
-import ProjectsSection from "@/components/ProjectsSection";
+
+const MoreInfo = dynamic(() => import("@/components/MoreInfo"));
+const ProjectsSection = dynamic(() => import("@/components/ProjectsSection"));
 import "./globals.css";
 import "./fireflies.css";
 
 export default function Home() {
-  const [isSplashLoaded, setIsSplashLoaded] = useState(false);
+  const [isBgLoaded, setIsBgLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [bgSrc, setBgSrc] = useState("");
   const [blurAmount, setBlurAmount] = useState(0);
@@ -69,8 +71,17 @@ export default function Home() {
       img.onload = () => {
         if (!isMounted) return;
         setBgSrc(smolImg);
-        // After small image loads successfully, initiate high-res download
-        loadHighRes();
+        setIsBgLoaded(true);
+        
+        // Give the browser time to paint the low-res background image before 
+        // starting the heavy high-res download. On slow connections (like 3G), 
+        // starting the high-res download immediately can block the render thread 
+        // or delay the CSS background image fetch.
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            loadHighRes();
+          }, 100);
+        });
       };
       
       img.onerror = () => {
@@ -114,13 +125,6 @@ export default function Home() {
         scroller.removeEventListener("scroll", handleScroll);
       }
     };
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsSplashLoaded(true);
-    }, 2500);
-    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -168,7 +172,7 @@ export default function Home() {
         ref={scrollContainerRef}
         className="main-scroll-container no-scrollbar animate-fadeIn"
       >
-        {isSplashLoaded ? (
+        {isBgLoaded ? (
           <>
             <HomePage onUnlockScroll={handleNextClick} />
           </>
