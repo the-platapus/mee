@@ -191,10 +191,10 @@ h3 {
 
 @keyframes macosFlash {
     0%, 100% {
-        filter: brightness(0.75);
+        filter: brightness(1);
     }
     50% {
-        filter: brightness(1.9);
+        filter: brightness(0.25);
     }
 }
 

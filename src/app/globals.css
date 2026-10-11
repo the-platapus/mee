@@ -20,6 +20,13 @@ body {
   font-family: var(--font-dancing-script), "Brush Script MT", "Comic Sans MS", cursive;
   user-select: none;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  cursor: url("/oneko/treat.png") 6 16, auto;
+}
+
+a,
+button,
+.cursor-pointer {
+  cursor: url("/oneko/treat.png") 6 16, pointer !important;
 }
 
 body::-webkit-scrollbar {
@@ -302,19 +309,18 @@ html::-webkit-scrollbar {
 }
 
 @keyframes macosFlash {
-
   0%,
   100% {
-    filter: brightness(0.75);
+    filter: brightness(1);
   }
 
   50% {
-    filter: brightness(1.9);
+    filter: brightness(0.25);
   }
 }
 
 .macos-flash {
-  animation: macosFlash 0.3s ease-in-out infinite !important;
+  animation: macosFlash 0.35s ease-in-out infinite !important;
   pointer-events: none !important;
   cursor: default !important;
 }
