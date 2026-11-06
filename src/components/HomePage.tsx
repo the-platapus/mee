@@ -12,7 +12,15 @@ const skills = [
   "...also an audiophile (did i mention that?)",
   "i hate bad companies",
   "screw you sam altman",
-  "i mean it"
+  "i mean it",
+  "you still reading this?",
+  "wow",
+  "i mean we could be friends",
+  "or you probably already know me...",
+  "anyway...",
+  "this is my portfolio",
+  "PLEASE HIRE ME IM SO GODDAMN TIRED OF AI TAKING OVER EVERYTHING",
+  "AAAAAAAAAAAAAAAAAAAA"
 ];
 
 export interface HomePageProps {
