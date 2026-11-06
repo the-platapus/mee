@@ -4,11 +4,15 @@ import { useEffect, useState } from "react";
 import "./home.css";
 
 const skills = [
-  "Just another Backend Engineer...",
-  "Sometimes a Frontend Dev too :D",
-  "I also love building IoT solutions",
-  "Also a 3D Artist / Designer",
-  "...and a Photographer / Videographer",
+  "just another software architecture engineer...",
+  "sometimes a frontend dev too :P",
+  "(with a mad obsession for audio protocols)",
+  "i also enjoy building IoT solutions",
+  "and a 3D Artist / Designer",
+  "...also an audiophile (did i mention that?)",
+  "i hate bad companies",
+  "screw you sam altman",
+  "i mean it"
 ];
 
 export interface HomePageProps {
